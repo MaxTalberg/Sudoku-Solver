@@ -16,7 +16,6 @@ Unit testing
 Implement a recursive function to solve the Sudoku puzzle using backtracking
 based on the validity of the function above.
 
-
 '''
 import sys
 import numpy as np
