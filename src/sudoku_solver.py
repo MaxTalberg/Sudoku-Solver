@@ -56,7 +56,9 @@ def read_board_from_file(filename):
             board.append([int(char) for char in row])
 
     # Return the matrix of the inserted sudoku board
+    print('\nInitial unsolved sudoku: \n\n', np.matrix(board))
     return board
+
 
 def check_possible_indicies(board, x, y, n):
 
@@ -110,6 +112,36 @@ def check_possible_indicies(board, x, y, n):
     # return True if intiger is allowed on square x, y
     return True
 
+def solve_sudoku(board):
+    '''
+    Solves the sudoku by recurssion of
+    possbile indicies
+
+    Parameters
+    ----------
+    board: list(list(int))
+        The current state of the sudoku board
+
+    Returns
+    ----------
+    Matrix
+        Matrix of completed sudoku board!
+
+    '''
+    # checks if square is blank, contains a 0
+    for x in range(0,9):
+        for y in range(0,9):
+            if board[y][x] == 0:
+
+                # check if number n can be here
+                for n in range(1, 10):
+                    if check_possible_indicies(board, x,y,n):
+                        board[y][x] = n
+                        solve_sudoku(board)
+                        # backtracking!
+                        board[y][x] = 0
+                return
+    print('\nFinal solved sudoku: \n\n', np.matrix(board))
 
 def main():
 
@@ -117,17 +149,15 @@ def main():
     if len(sys.argv) != 2:
         print("Usage: python3 src/sudoku_solver.py data/input.txt")
         return
-
+    
+    # input file containing sudoku
     input_file = sys.argv[1]
 
+    # initial unsolved sudoku
     board = read_board_from_file(input_file)
 
-    # readable grid output
-    print(np.matrix(board))
-
-    # test to confirm desired output from algorithm
-    result = check_possible_indicies(board, 5, 0, 4)
-    print(result)
+    # final solved sudoku
+    solve_sudoku(board)
 
     return
 
