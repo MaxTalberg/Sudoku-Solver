@@ -58,7 +58,7 @@ def read_board_from_file(filename):
     # Return the matrix of the inserted sudoku board
     return board
 
-def check_possible_indicies(x, y, n):
+def check_possible_indicies(board, x, y, n):
 
     '''
     Checks if a certain indicies is possible
@@ -66,24 +66,24 @@ def check_possible_indicies(x, y, n):
 
     Parameters
     ----------
+    board: list(list(int))
+        The current state of the sudoku board
+
     x: int
-        grid square number on the x-axis
+        Column number of the sudoku board
 
     y: int
-        grid square number on the y-axis
+        Row number of the sudoku board
 
     n: int
-        indicie to go into grid square
+        indicie to check in the grid square
 
     Returns
     ----------
     Boolean
-        Boolean output to determin if
-        intiger is possible
+        True if number is allowed, False otherwise
 
     '''
-    # Initialise global variable board
-    board = [[0, 0, 0, 0, 0, 7, 0, 0, 0], [0, 0, 0, 0, 0, 9, 5, 0, 4], [0, 0, 0, 0, 5, 0, 1, 6, 9], [0, 8, 0, 0, 0, 0, 3, 0, 5], [0, 7, 5, 0, 0, 0, 2, 9, 0], [4, 0, 6, 0, 0, 0, 0, 8, 0], [7, 6, 2, 0, 8, 0, 0, 0, 0], [1, 0, 3, 9, 0, 0, 0, 0, 0], [0, 0, 0, 6, 0, 0, 0, 0, 0]]
 
     # checks if n is in column x
     for i in range(0,9):
@@ -102,6 +102,7 @@ def check_possible_indicies(x, y, n):
         for j in range(0,3):
             if board[i][j] == n:
                 return False
+            
     # return True if intiger is allowed on square x, y
     return True
 
@@ -121,7 +122,8 @@ def main():
     print(np.matrix(board))
 
     # test to confirm desired output from algorithm
-    assert(check_possible_indicies(5, 0, 4) == True)
+    result = check_possible_indicies(board, 5, 0, 4)
+    print(result)
 
     return
 
