@@ -1,20 +1,22 @@
 '''
 PROTOTYPING
 Read the Sudoku puzzle from input or define it as a 2D array.
-Check suduko is valid. 
-    - Repeats in row, column or grid.
-    - Valid data types numbers 1-9
+Unit testing
+- Test with non-existent file
+- Test with badly formatted file
+- Test with correct file
 
 
 Implement a function to check if a number is valid:
-- in a given row.
-- in a given column.
-- in a given 3x3 subgrid.
+Unit testing
+- Test with true values
+- Test with false values columnn and row and 3x3 square
+- Test edge cases
 
 Implement a recursive function to solve the Sudoku puzzle using backtracking
 based on the validity of the function above.
 
-Print the solved Sudoku puzzle.
+
 '''
 import sys
 import numpy as np
@@ -56,7 +58,6 @@ def read_board_from_file(filename):
             board.append([int(char) for char in row])
 
     # Return the matrix of the inserted sudoku board
-    print('\nInitial unsolved sudoku: \n\n', np.matrix(board))
     return board
 
 
@@ -134,15 +135,15 @@ def solve_sudoku(board):
             if board[y][x] == 0:
 
                 # check if number n can be here
-                for n in range(1, 10):
+                for n in range(1,10):
                     if check_possible_indicies(board, x,y,n):
                         board[y][x] = n
-                        solve_sudoku(board)
+                        if solve_sudoku(board):
+                            return board
                         # backtracking!
                         board[y][x] = 0
-                return
-    print('\nFinal solved sudoku: \n\n', np.matrix(board))
-
+                return None
+    return board
 def main():
 
     # Check the correct number of command line arguements are passsed
@@ -155,9 +156,12 @@ def main():
 
     # initial unsolved sudoku
     board = read_board_from_file(input_file)
+    print('\nInitial unsolved sudoku: \n\n', np.matrix(board))
 
     # final solved sudoku
-    solve_sudoku(board)
+    solved_board = solve_sudoku(board)
+    print('\nFinal solved sudoku: \n\n', np.matrix(solved_board))
+
 
     return
 
