@@ -97,10 +97,14 @@ def check_possible_indicies(board, x, y, n):
             #print('y: ' ,[i+1, y+1])
             return False
         
-    # check if n is in 3x3 square
+    # top left corner of 3x3 square
+    x0 = (x // 3) * 3
+    y0 = (y // 3) * 3
+
+    # checks if n is in 3x3 square
     for i in range(0,3):
         for j in range(0,3):
-            if board[i][j] == n:
+            if board[y0 + i][x0 + j] == n:
                 return False
             
     # return True if intiger is allowed on square x, y
