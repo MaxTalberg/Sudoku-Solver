@@ -31,6 +31,9 @@ class SudokuSolver:
 
     # initialise board from file
     def __init__(self, filename):
+        '''
+        Initialises the sudoku board
+        '''
         self.board = self.read_board_from_file(filename)
     
     def read_board_from_file(self, filename):
@@ -50,7 +53,6 @@ class SudokuSolver:
             A list of lists representing each row
             of the initial sudoko board
 
-        Add error trapping ---> unit tests
         '''
 
         # Initialise the empty board
@@ -97,16 +99,11 @@ class SudokuSolver:
             True if number is allowed, False otherwise
         '''
 
-        # checks if n is in column x
+        # checks if n is in column x or row y
         for i in range(0,9):
-            if self.board[i][x] == n:
+            if self.board[i][x] == n or self.board[y][i] == n:
                 return False
-        
-        # checks if n is in row y
-        for i in range(0,9):
-            if self.board[y][i] == n:
-                return False
-        
+
         # top left corner of 3x3 square
         x0 = (x // 3) * 3
         y0 = (y // 3) * 3
@@ -137,8 +134,8 @@ class SudokuSolver:
 
         '''
         # checks if square is blank, contains a 0
-        for x in range(0,9):
-            for y in range(0,9):
+        for x in range(9):
+            for y in range(9):
                 if self.board[y][x] == 0:
 
                     # check if number n can be here
@@ -175,6 +172,7 @@ def main():
     # input file containing sudoku
     input_file = sys.argv[1]
 
+
     # initial unsolved sudoku
     sododku_solver = SudokuSolver(input_file)
     print('\nInitial unsolved sudoku: \n\n', np.matrix(sododku_solver.get_board()))
@@ -182,7 +180,6 @@ def main():
     # final solved sudoku
     sododku_solver.solve_sudoku()
     print('\nFinal solved sudoku: \n\n', np.matrix(sododku_solver.get_board()))
-
     return
 
 
