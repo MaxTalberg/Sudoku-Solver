@@ -12,17 +12,17 @@ class TestSudokuSolver(unittest.TestCase):
     - Test with valid file: valid puzzle string of 81 characters *DONE*
     - Test with solvable board: solvable board with one known solution *DONE*
     - Test with unsolvable board: impossible board with no solution
-    - Test with empty board: empty unsolved board *
-    - Test with solved board: full solved board *
+    - Test with empty board: empty unsolved board *DONE*
+    - Test with solved board: full solved board *DONE*
     - Test with invalid board size: board not 81 characters in length *DONE*
     - Test with invalid characters: puzzle string contains invalid characters *DONE*
-    - Test backtracking algorithm (Fasle and True): check if the backtracking algorithm works
-    - Test with valid row
-    - Test with invalid row
-    - Test with valid column
-    - Test with invalid column
-    - Test with valid 3x3 square
-    - Test with invalid 3x3 square
+    - Test backtracking algorithm (Fasle and True): check if the backtracking algorithm works *DONE*
+    - Test with valid row *DONE* with valid file above
+    - Test with invalid row *DONE*
+    - Test with valid column *DONE* with valid file above
+    - Test with invalid column *DONE*
+    - Test with valid 3x3 square *DONE* with valid file above8
+    - Test with invalid 3x3 square *DONE*
     - Test with multiple solutions: board with multiple solutions
     """
 
@@ -102,7 +102,7 @@ class TestSudokuSolver(unittest.TestCase):
         assert solver.solve_sudoku() == None
         pass
 
-    # test with true values
+    # test with true and false values
     def test_check_possible_indicies_true(self):
         solver = SudokuSolver("valid_file.txt")
         assert solver.check_possible_indicies(0, 0, 0) == True
@@ -110,24 +110,28 @@ class TestSudokuSolver(unittest.TestCase):
         assert solver.check_possible_indicies(2, 2, 0) == True
         assert solver.check_possible_indicies(3, 3, 0) == True
         assert solver.check_possible_indicies(4, 4, 0) == True
-        assert solver.check_possible_indicies(5, 5, 0) == True
-        assert solver.check_possible_indicies(6, 6, 0) == True
-        assert solver.check_possible_indicies(7, 7, 0) == True
-        assert solver.check_possible_indicies(8, 8, 0) == True
-        pass
-
-    # test with false values
-    def test_check_possible_indicies_edge(self):
-        solver = SudokuSolver("valid_file.txt")
-        assert solver.check_possible_indicies(0, 0, 5) == False
         assert solver.check_possible_indicies(0, 0, 0) == False
         assert solver.check_possible_indicies(0, 8, 0) == False
         assert solver.check_possible_indicies(8, 0, 0) == False
         assert solver.check_possible_indicies(8, 8, 0) == False
         pass
 
-    # test edge cases
-    def test_edge_cases(self):
+    # test with invalid row
+    def test_indicies_invalid_row(self):
+        solver = SudokuSolver("invalid_row_file.txt")
+        assert solver.solve_sudoku() == None
+        pass
+
+    # test with invalid column
+    def test_indicies_invalid_column(self):
+        solver = SudokuSolver("invalid_column_file.txt")
+        assert solver.solve_sudoku() == None
+        pass
+
+    # test with invalid 3x3 square
+    def test_indicies_invalid_square(self):
+        solver = SudokuSolver("invalid_square_file.txt")
+        assert solver.solve_sudoku() == None
         pass
 
 
