@@ -36,17 +36,7 @@ class TestSudokuSolver(unittest.TestCase):
     def test_read_board_from_file_valid(self):
         solver = SudokuSolver("valid_file.txt")
         expected_board = [
-            [
-                0,
-                0,
-                0,
-                0,
-                0,
-                7,
-                0,
-                0,
-                0,
-            ],
+            [0, 0, 0, 0, 0, 7, 0, 0, 0],
             [0, 0, 0, 0, 0, 9, 5, 0, 4],
             [0, 0, 0, 0, 5, 0, 1, 6, 9],
             [0, 8, 0, 0, 0, 0, 3, 0, 5],
