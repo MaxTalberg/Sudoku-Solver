@@ -2,25 +2,23 @@
 PROTOTYPING
 
 read_board_from_file(filename):
-Unit testing
-- Test with non-existent file
-- Test with badly formatted file
-- Test with correct file
 
+    Read the Sudoku puzzle from input or define it as a 2D array.
 
-check_possible_indicies(board, x, y, n):
-Unit testing
-- Test with true values
-- Test with false values columnn and row and 3x3 square
-- Test edge cases
+Unit testing:
 
-solve_sudoku(board):
-- Test solvable board
-- Test solved board
-- Test unsolvable board
-- Test empty board
-- Test invalid board size
-based on the validity of the function above.
+    - Test with non-existent file: no file present *DONE*
+    - Test with invalid file: no puzzle string *DONE*
+    - Test with valid file: valid puzzle string of 81 characters *DONE*
+    - Test with solvable board: solvable board with one known solution *DONE*
+    - Test with unsolvable board: impossible board with no solution
+    - Test with empty board: empty unsolved board
+    - Test with solved board: full solved board
+    - Test with invalid board size: board not 81 characters in length *DONE*
+    - Test with invalid characters: puzzle string contains invalid characters *DONE*
+    - Test with true (valid, duplicates, ect) values: row, column and 3x3 square
+    - Test with false (invalid, dupilcates, ect) values: row, column and 3x3 square
+    - Test with multiple solutions: board with multiple solutions
 
 """
 import sys
