@@ -35,7 +35,11 @@ class SudokuSolver:
         """
         Initialises the sudoku board
         """
-        self.board = self.read_board_from_file(filename)
+        try:
+            self.board = self.read_board_from_file(filename)
+        except FileNotFoundError:
+            print("File not found")
+            self.board = None
 
     def read_board_from_file(self, filename):
         """
