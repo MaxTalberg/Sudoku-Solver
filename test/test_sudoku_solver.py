@@ -7,17 +7,23 @@ class TestSudokuSolver(unittest.TestCase):
     """
     Read the Sudoku puzzle from input or define it as a 2D array.
     Unit testing
-    - Test with non-existent file: no file present
-    - Test with invalid file: no puzzle string
-    - Test with valid file: valid puzzle string of 81 characters
-    - Test with solvable board: solvable board with one known solution
+    - Test with non-existent file: no file present *DONE*
+    - Test with invalid file: no puzzle string *DONE*
+    - Test with valid file: valid puzzle string of 81 characters *DONE*
+    - Test with solvable board: solvable board with one known solution *DONE*
     - Test with unsolvable board: impossible board with no solution
-    - Test with empty board: empty unsolved board
-    - Test with solved board: full solved board
-    - Test with invalid board size: board not 81 characters in length
-    - Test with invalid characters: puzzle string contains invalid characters
-    - Test with true (valid) values: row, column and 3x3 square
-    - Test with false (invalid) values: row, column and 3x3 square
+    - Test with empty board: empty unsolved board *
+    - Test with solved board: full solved board *
+    - Test with invalid board size: board not 81 characters in length *DONE*
+    - Test with invalid characters: puzzle string contains invalid characters *DONE*
+    - Test backtracking algorithm (Fasle and True): check if the backtracking algorithm works
+    - Test with valid row
+    - Test with invalid row
+    - Test with valid column
+    - Test with invalid column
+    - Test with valid 3x3 square
+    - Test with invalid 3x3 square
+    - Test with multiple solutions: board with multiple solutions
     """
 
     # test with non-existent file
