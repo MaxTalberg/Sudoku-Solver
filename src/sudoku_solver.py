@@ -83,20 +83,44 @@ class SudokuSolver:
                     # validate numbers are between 0 and 9
                     if any(n < 0 or n > 9 for n in row_numbers):
                         raise ValueError("Invalid number found in row")
-                    # validate there are no duplicates
-                    if len(row_numbers) != len(set(row_numbers)) - row_numbers.count(0):
+
+                    # validate there are no duplicates in rows
+                    non_zero_row_valuess = [
+                        number for number in row_numbers if number != 0
+                    ]
+                    if len(set(non_zero_row_valuess)) != len(non_zero_row_valuess):
                         raise ValueError("Duplicate number found in row")
 
                 except ValueError:
                     # if the character is not an integer
                     raise ValueError("Invalid character found")
 
-                # if all checks pass, append row to board
+                # append row to board
                 board.append(row_numbers)
 
         # validate board size
         if len(board) != 9:
             raise ValueError("Board size is not 9 x 9")
+
+        # validate there are no duplicates in columns
+        for col in range(len(board[0])):
+            non_zero_col_values = [
+                board[row][col] for row in range(len(board)) if board[row][col] != 0
+            ]
+            if len(set(non_zero_col_values)) != len(non_zero_col_values):
+                raise ValueError("Duplicate number found in column")
+
+        # validate there are no duplicates in 3x3 squares
+        for row in range(0, 9, 3):
+            for col in range(0, 9, 3):
+                non_zero_square_values = [
+                    board[row + i][col + j]
+                    for i in range(3)
+                    for j in range(3)
+                    if board[row + i][col + j] != 0
+                ]
+                if len(set(non_zero_square_values)) != len(non_zero_square_values):
+                    raise ValueError("Duplicate number found in 3x3 square")
 
         # validate board is not empty
         if sum(sum(board, [])) == 0:
