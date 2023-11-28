@@ -62,7 +62,7 @@ class SudokuSolver:
         board = []
 
         with open(filename, "r") as file:
-            for line in file:
+            for line_number, line in enumerate(file, 1):
                 # Ignore the grid separators
                 if line.startswith("---"):
                     continue
@@ -72,7 +72,7 @@ class SudokuSolver:
 
                 # validate row length
                 if len(row) != 9:
-                    raise ValueError("Row length is not 9")
+                    raise ValueError(f"Row length is not 9 at line {line_number}")
 
                 # Convert each character to an integer
                 try:
