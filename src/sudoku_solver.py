@@ -64,7 +64,7 @@ class SudokuSolver:
         board = []
 
         with open(filename, "r") as file:
-            for line in file:
+            for line_number, line in enumerate(file, 1):
                 # Ignore the grid separators
                 if line.startswith("---"):
                     continue
@@ -74,14 +74,25 @@ class SudokuSolver:
 
                 # validate row length
                 if len(row) != 9:
-                    raise ValueError("Row length is not 9")
+                    raise ValueError(f"Row length is not 9 at line {line_number}")
 
                 # Convert each character to an integer
                 try:
-                    board.append([int(char) for char in row])
+                    row_numbers = [int(char) for char in row]
+
+                    # validate numbers are between 0 and 9
+                    if any(n < 0 or n > 9 for n in row_numbers):
+                        raise ValueError("Invalid number found in row")
+                    # validate there are no duplicates
+                    if len(row_numbers) != len(set(row_numbers)) - row_numbers.count(0):
+                        raise ValueError("Duplicate number found in row")
+
                 except ValueError:
                     # if the character is not an integer
                     raise ValueError("Invalid character found")
+
+                # if all checks pass, append row to board
+                board.append(row_numbers)
 
         # validate board size
         if len(board) != 9:
