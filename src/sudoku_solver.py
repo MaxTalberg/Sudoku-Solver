@@ -87,6 +87,14 @@ class SudokuSolver:
         if len(board) != 9:
             raise ValueError("Board size is not 9 x 9")
 
+        # validate board is not empty
+        if sum(sum(board, [])) == 0:
+            raise ValueError("Board is empty!")
+
+        # validate board is not full
+        if sum(sum(board, [])) == (45 * 9):
+            raise ValueError("Board is already full!")
+
         # Return the matrix of the inserted sudoku board
         return board
 
