@@ -11,19 +11,20 @@ class TestSudokuSolver(unittest.TestCase):
     - Test with invalid file: no puzzle string *DONE*
     - Test with valid file: valid puzzle string of 81 characters *DONE*
     - Test with solvable board: solvable board with one known solution *DONE*
-    - Test with unsolvable board: impossible board with no solution
-    - Test with empty board: empty unsolved board *DONE*
-    - Test with solved board: full solved board *DONE*
     - Test with invalid board size: board not 81 characters in length *DONE*
     - Test with invalid characters: puzzle string contains invalid characters *DONE*
     - Test backtracking algorithm (Fasle and True): check if the backtracking algorithm works *DONE*
-    - Test with valid row *DONE* with valid file above
+    - Test with valid row *DONE with valid file above*
     - Test with invalid row *DONE*
-    - Test with valid column *DONE* with valid file above
+    - Test with valid column *DONE with valid file above*
     - Test with invalid column *DONE*
-    - Test with valid 3x3 square *DONE* with valid file above8
+    - Test with valid 3x3 square *DONE with valid file above*
     - Test with invalid 3x3 square *DONE*
+    - Test with empty board: empty unsolved board *DONE*
+    - Test with empty text file *DONE*
+    - Test with solved board: full solved board *DONE*
     - Test with multiple solutions: board with multiple solutions
+    - Test with unsolvable board: impossible board with no solution
     """
 
     # test with non-existent file
@@ -72,24 +73,6 @@ class TestSudokuSolver(unittest.TestCase):
         assert solver.solve_sudoku() == expected_board
         pass
 
-    # test with unsolvable board
-    def test_solve_sudoku_unsolvable(self):
-        solver = SudokuSolver("unsolvable_file.txt")
-        assert solver.solve_sudoku() == None
-        pass
-
-    # test with empty board
-    def test_solve_sudoku_empty(self):
-        solver = SudokuSolver("empty_file.txt")
-        assert solver.solve_sudoku() == None
-        pass
-
-    # test with solved board
-    def test_solve_sudoku_solved(self):
-        solver = SudokuSolver("solved_file.txt")
-        assert solver.solve_sudoku() == None
-        pass
-
     # test with invalid board size
     def test_solve_sudoku_invalid_size(self):
         solver = SudokuSolver("invalid_size_file.txt")
@@ -133,6 +116,35 @@ class TestSudokuSolver(unittest.TestCase):
         solver = SudokuSolver("invalid_square_file.txt")
         assert solver.solve_sudoku() == None
         pass
+
+    # test with empty board
+    def test_solve_sudoku_empty(self):
+        solver = SudokuSolver("empty_file.txt")
+        assert solver.solve_sudoku() == None
+        pass
+
+    # test with empty text file
+    def test_solve_sudoku_empty_text_file(self):
+        solver = SudokuSolver("empty_text_file.txt")
+        assert solver.solve_sudoku() == None
+        pass
+
+    # test with solved board
+    def test_solve_sudoku_solved(self):
+        solver = SudokuSolver("solved_file.txt")
+        assert solver.solve_sudoku() == None
+        pass
+
+    """# test with multiple solutions
+    def test_solve_sudoku_multiple_solutions(self):
+        solver = SudokuSolver("multiple_solutions_file.txt")
+        pass"""
+
+    """# test with unsolvable board
+    def test_solve_sudoku_unsolvable(self):
+        solver = SudokuSolver("unsolvable_file.txt")
+        assert solver.solve_sudoku() == None
+        pass"""
 
 
 if __name__ == "__main__":
