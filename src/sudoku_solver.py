@@ -37,8 +37,8 @@ class SudokuSolver:
         """
         try:
             self.board = self.read_board_from_file(filename)
-        except FileNotFoundError:
-            print("File not found")
+        except (FileNotFoundError, ValueError) as error:
+            print("Error: ".format(error))
             self.board = None
 
     def read_board_from_file(self, filename):
@@ -72,8 +72,20 @@ class SudokuSolver:
                 # Remove the grid dividers and newline characters, then split into numbers
                 row = line.replace("|", "").replace("\n", "")
 
+                # validate row length
+                if len(row) != 9:
+                    raise ValueError("Row length is not 9")
+
                 # Convert each character to an integer
-                board.append([int(char) for char in row])
+                try:
+                    board.append([int(char) for char in row])
+                except ValueError:
+                    # if the character is not an integer
+                    raise ValueError("Invalid character found")
+
+        # validate board size
+        if len(board) != 9:
+            raise ValueError("Board size is not 9 x 9")
 
         # Return the matrix of the inserted sudoku board
         return board
