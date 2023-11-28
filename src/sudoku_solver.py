@@ -36,7 +36,7 @@ class SudokuSolver:
         try:
             self.board = self.read_board_from_file(filename)
         except (FileNotFoundError, ValueError) as error:
-            print("Error: ".format(error))
+            print("Error: {}".format(error))
             self.board = None
 
     def read_board_from_file(self, filename):
@@ -155,6 +155,9 @@ class SudokuSolver:
             The solved sudoku board
 
         """
+        if self.board is None:
+            print("Error: No board found")
+            return None
         # checks if square is blank, contains a 0
         for x in range(9):
             for y in range(9):
