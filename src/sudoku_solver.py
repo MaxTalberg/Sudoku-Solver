@@ -9,20 +9,29 @@ Unit testing:
 
     - Test with non-existent file: no file present *DONE*
     - Test with invalid file: no puzzle string *DONE*
-    - Test with valid file: valid puzzle string of 81 characters *DONE*
-    - Test with solvable board: solvable board with one known solution *DONE*
-    - Test with unsolvable board: impossible board with no solution
+    - Test with valid file: valid puzzle string
+        of 81 characters *DONE*
+    - Test with solvable board: solvable board
+        with one known solution *DONE*
+    - Test with unsolvable board: impossible board
+        with no solution
     - Test with empty board: empty unsolved board
     - Test with solved board: full solved board
-    - Test with invalid board size: board not 81 characters in length *DONE*
-    - Test with invalid characters: puzzle string contains invalid characters *DONE*
-    - Test with true (valid, duplicates, ect) values: row, column and 3x3 square
-    - Test with false (invalid, dupilcates, ect) values: row, column and 3x3 square
-    - Test with multiple solutions: board with multiple solutions
+    - Test with invalid board size: board not
+        81 characters in length *DONE*
+    - Test with invalid characters: puzzle string
+        contains invalid characters *DONE*
+    - Test with true (valid, duplicates, ect)
+        values: row, column and 3x3 square
+    - Test with false (invalid, dupilcates, ect)
+        values: row, column and 3x3 square
+    - Test with multiple solutions: board
+        with multiple solutions
 
 """
 import sys
-import numpy as np
+
+# import numpy as np
 
 
 class SudokuSolver:
@@ -36,8 +45,7 @@ class SudokuSolver:
         try:
             self.board = self.read_board_from_file(filename)
         except (FileNotFoundError, ValueError) as error:
-            print("Error: {}".format(error))
-            self.board = None
+            raise RuntimeError(f"Failed to initialise board: {error}")
 
     def read_board_from_file(self, filename):
         """
@@ -67,12 +75,13 @@ class SudokuSolver:
                 if line.startswith("---"):
                     continue
 
-                # Remove the grid dividers and newline characters, then split into numbers
+                # Remove the grid dividers and newline characters
+                # then split into numbers
                 row = line.replace("|", "").replace("\n", "")
 
                 # validate row length
                 if len(row) != 9:
-                    raise ValueError(f"Row length is not 9 at line {line_number}")
+                    raise ValueError(f"Row length is not 9 at {line_number}")
 
                 # Convert each character to an integer
                 try:
@@ -83,10 +92,10 @@ class SudokuSolver:
                         raise ValueError("Invalid number found in row")
 
                     # validate there are no duplicates in rows
-                    non_zero_row_valuess = [
+                    non_zero_row_vals = [
                         number for number in row_numbers if number != 0
                     ]
-                    if len(set(non_zero_row_valuess)) != len(non_zero_row_valuess):
+                    if len(set(non_zero_row_vals)) != len(non_zero_row_vals):
                         raise ValueError("Duplicate number found in row")
 
                 except ValueError:
@@ -102,22 +111,24 @@ class SudokuSolver:
 
         # validate there are no duplicates in columns
         for col in range(len(board[0])):
-            non_zero_col_values = [
-                board[row][col] for row in range(len(board)) if board[row][col] != 0
+            non_zero_col_vals = [
+                board[row][col]
+                for row in range(len(board))
+                if board[row][col] != 0
             ]
-            if len(set(non_zero_col_values)) != len(non_zero_col_values):
+            if len(set(non_zero_col_vals)) != len(non_zero_col_vals):
                 raise ValueError("Duplicate number found in column")
 
         # validate there are no duplicates in 3x3 squares
         for row in range(0, 9, 3):
             for col in range(0, 9, 3):
-                non_zero_square_values = [
+                non_zero_square_vals = [
                     board[row + i][col + j]
                     for i in range(3)
                     for j in range(3)
                     if board[row + i][col + j] != 0
                 ]
-                if len(set(non_zero_square_values)) != len(non_zero_square_values):
+                if len(set(non_zero_square_vals)) != len(non_zero_square_vals):
                     raise ValueError("Duplicate number found in 3x3 square")
 
         # validate board is not empty
@@ -155,6 +166,8 @@ class SudokuSolver:
         Boolean
             True if number is allowed, False otherwise
         """
+        if self.board is None:
+            return False
 
         # checks if n is in column x or row y
         for i in range(0, 9):
@@ -191,7 +204,7 @@ class SudokuSolver:
 
         """
         if self.board is None:
-            print("Error: No board found")
+            # print("Error: No board found")
             return None
         # checks if square is blank, contains a 0
         for x in range(9):
@@ -225,7 +238,7 @@ class SudokuSolver:
 def main():
     # Check the correct number of command line arguements are passsed
     if len(sys.argv) != 2:
-        print("Usage: python3 src/sudoku_solver.py data/input.txt")
+        # print("Usage: python3 src/sudoku_solver.py data/input.txt")
         return
 
     # input file containing sudoku
@@ -233,11 +246,13 @@ def main():
 
     # initial unsolved sudoku
     sododku_solver = SudokuSolver(input_file)
-    print("\nInitial unsolved sudoku: \n\n", np.matrix(sododku_solver.get_board()))
+    # print("\nInitial unsolved sudoku: \n\n")
+    # print(np.matrix(sododku_solver.get_board())))
 
     # final solved sudoku
     sododku_solver.solve_sudoku()
-    print("\nFinal solved sudoku: \n\n", np.matrix(sododku_solver.get_board()))
+    # print("\nFinal solved sudoku: \n\n")
+    # print(np.matrix(sododku_solver.get_board())))
     return
 
 
