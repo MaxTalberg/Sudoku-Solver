@@ -6,32 +6,15 @@ read_board_from_file(filename):
     Read the Sudoku puzzle from input or define it as a 2D array.
 
 Unit testing:
-
-    - Test with non-existent file: no file present *DONE*
-    - Test with invalid file: no puzzle string *DONE*
-    - Test with valid file: valid puzzle string
-        of 81 characters *DONE*
-    - Test with solvable board: solvable board
-        with one known solution *DONE*
     - Test with unsolvable board: impossible board
         with no solution
     - Test with empty board: empty unsolved board
     - Test with solved board: full solved board
-    - Test with invalid board size: board not
-        81 characters in length *DONE*
-    - Test with invalid characters: puzzle string
-        contains invalid characters *DONE*
-    - Test with true (valid, duplicates, ect)
-        values: row, column and 3x3 square
-    - Test with false (invalid, dupilcates, ect)
-        values: row, column and 3x3 square
     - Test with multiple solutions: board
         with multiple solutions
 
 """
 import sys
-
-# import numpy as np
 
 
 class SudokuSolver:
@@ -40,7 +23,7 @@ class SudokuSolver:
     # initialise board from file
     def __init__(self, filename):
         """
-        Initialises the sudoku board
+        Initialises the sudoku board from a given file
         """
         try:
             self.board = self.read_board_from_file(filename)
@@ -81,7 +64,7 @@ class SudokuSolver:
 
                 # validate row length
                 if len(row) != 9:
-                    raise ValueError(f"Row length is not 9 at {line_number}")
+                    raise ValueError(f"Row length error: row {line_number}")
 
                 # Convert each character to an integer
                 try:
@@ -222,6 +205,7 @@ class SudokuSolver:
         # returns board when a solution is found
         return self.board
 
+    # Maybe delete this function as not using it
     def get_board(self):
         """
         Provides current state of the sudoku board
@@ -233,6 +217,30 @@ class SudokuSolver:
 
         """
         return self.board
+
+    def format_sudoku_board(self):
+        """
+        Formats the sudoku board
+
+        Returns
+        ----------
+        formated_board: str
+            The formatted sudoku board
+        """
+        # initialise empty string
+        formated_board = ""
+        # iterate through each row
+        for i, row in enumerate(self.board):
+            if i % 3 == 0 and i != 0:
+                formated_board += "---+---+---\n"
+            # iterate through each number in row
+            for j, number in enumerate(row):
+                if j % 3 == 0 and j != 0:
+                    formated_board += "|"
+                formated_board += str(number)
+            formated_board += "\n"
+        # return formatted board
+        return formated_board
 
 
 def main():
@@ -246,14 +254,14 @@ def main():
 
     # initial unsolved sudoku
     sododku_solver = SudokuSolver(input_file)
-    # print("\nInitial unsolved sudoku: \n\n")
-    # print(np.matrix(sododku_solver.get_board())))
 
     # final solved sudoku
     sododku_solver.solve_sudoku()
-    # print("\nFinal solved sudoku: \n\n")
-    # print(np.matrix(sododku_solver.get_board())))
-    return
+
+    # get formated sudoku board
+    solved_board = sododku_solver.format_sudoku_board()
+
+    return print(solved_board)
 
 
 if __name__ == "__main__":

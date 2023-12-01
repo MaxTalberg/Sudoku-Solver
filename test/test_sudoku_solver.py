@@ -4,38 +4,16 @@ from src.sudoku_solver import SudokuSolver
 
 class TestSudokuSolver(unittest.TestCase):
     """
-    Read the Sudoku puzzle from input or define it as a 2D array.
-    Unit testing
-    - Test with non-existent file: no file present *DONE*
-    - Test with invalid file: no puzzle string *DONE*
-    - Test with valid file: valid puzzle string
-        of 81 characters *DONE*
-    - Test with solvable board: solvable board
-        with one known solution *DONE*
-    - Test with invalid board size:
-        board not 81 characters in length *DONE*
-    - Test with invalid characters:
-        puzzle string contains invalid characters *DONE*
-    - Test backtracking algorithm (Fasle and True):
-        check if the backtracking algorithm works *DONE*
-    - Test with valid row *DONE with valid file above*
-    - Test with invalid row *DONE*
-    - Test with valid column *DONE with valid file above*
-    - Test with invalid column *DONE*
-    - Test with valid 3x3 square *DONE with valid file above*
-    - Test with invalid 3x3 square *DONE*
-    - Test with empty board:
-        empty unsolved board *DONE*
-    - Test with empty text file *DONE*
-    - Test with solved board:
-        full solved board *DONE*
-    - Test with multiple solutions:
-        board with multiple solutions
-    - Test with unsolvable board:
-        impossible board with no solution
+    Unit testing:
+        - Test with unsolvable board: impossible board
+            with no solution
+        - Test with empty board: empty unsolved board
+        - Test with solved board: full solved board
+        - Test with multiple solutions: board
+            with multiple solutions
 
     #####################################################
-    Mocking to test logic
+        Mocking to test logic
     #####################################################
     """
 
