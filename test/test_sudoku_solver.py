@@ -6,7 +6,7 @@ class TestSudokuSolver(unittest.TestCase):
     """
     Unit testing:
         - Test with unsolvable board: impossible board
-            with no solution
+            with no solution *DONE*
         - Test with multiple solutions: board
             with multiple solutions
 
@@ -60,7 +60,11 @@ class TestSudokuSolver(unittest.TestCase):
             [1, 4, 3, 9, 7, 2, 6, 5, 8],
             [8, 5, 9, 6, 1, 3, 4, 2, 7],
         ]
-        assert solver.solve_sudoku() == expected_board
+        # switched solved to True, check solves puzzle
+        self.assertTrue(solver.solve_sudoku())
+
+        # check if board matches expected board
+        self.assertEqual(solver.board, expected_board)
         pass
 
     # test with invalid board size
@@ -119,6 +123,13 @@ class TestSudokuSolver(unittest.TestCase):
             solver = SudokuSolver("data/empty_text_file.txt")
             assert solver.solve_sudoku() is None
             pass
+
+    """# test with solved board
+    def test_solve_sudoku_solved(self):
+        with self.assertRaises(RuntimeError):
+            solver = SudokuSolver("data/solved_file.txt")
+            assert solver.solve_sudoku() is None
+            pass"""
 
     """# test with multiple solutions
     def test_solve_sudoku_multiple_solutions(self):

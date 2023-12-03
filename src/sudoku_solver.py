@@ -178,22 +178,22 @@ class SudokuSolver:
         """
         if self.board is None:
             # print("Error: No board found")
-            return None
+            raise ValueError("No board found")
         # checks if square is blank, contains a 0
-        for x in range(9):
-            for y in range(9):
+        for y in range(9):
+            for x in range(9):
                 if self.board[y][x] == 0:
-                    # check if number n can be here
                     for n in range(1, 10):
                         if self.check_possible_indicies(x, y, n):
                             self.board[y][x] = n
                             if self.solve_sudoku():
-                                return self.board
-                            # backtracking!
+                                return True
                             self.board[y][x] = 0
-                    return None
-        # returns board when a solution is found
-        return self.board
+                    # check if square is unsovleable
+                    return False
+
+        # If entire board is filled without issues, return True
+        return True
 
     # Maybe delete this function as not using it
     def get_board(self):
@@ -242,16 +242,19 @@ def main():
     # input file containing sudoku
     input_file = sys.argv[1]
 
-    # initial unsolved sudoku
-    sododku_solver = SudokuSolver(input_file)
+    # error handling for unsolvable sudoku
+    try:
+        # initial unsolved sudoku
+        sudoku_solver = SudokuSolver(input_file)
+        if sudoku_solver.solve_sudoku():
+            # get formated sudoku board
+            solved_board = sudoku_solver.format_sudoku_board()
+            return print(solved_board)
+        else:
+            raise ValueError("Unsolvable sudoku")
 
-    # final solved sudoku
-    sododku_solver.solve_sudoku()
-
-    # get formated sudoku board
-    solved_board = sododku_solver.format_sudoku_board()
-
-    return print(solved_board)
+    except ValueError as e:
+        return print(e)
 
 
 if __name__ == "__main__":
