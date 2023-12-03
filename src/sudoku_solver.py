@@ -195,19 +195,6 @@ class SudokuSolver:
         # If entire board is filled without issues, return True
         return True
 
-    # Maybe delete this function as not using it
-    def get_board(self):
-        """
-        Provides current state of the sudoku board
-
-        Returns
-        ----------
-        board: list(list(int))
-            The current state of the sudoku board
-
-        """
-        return self.board
-
     def format_sudoku_board(self):
         """
         Formats the sudoku board

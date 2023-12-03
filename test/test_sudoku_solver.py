@@ -45,7 +45,7 @@ class TestSudokuSolver(unittest.TestCase):
             [1, 0, 3, 9, 0, 0, 0, 0, 0],
             [0, 0, 0, 6, 0, 0, 0, 0, 0],
         ]
-        assert solver.get_board() == expected_board
+        self.assertEqual(solver.board, expected_board)
         pass
 
     # test with solvable board
