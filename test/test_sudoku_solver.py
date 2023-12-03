@@ -7,8 +7,6 @@ class TestSudokuSolver(unittest.TestCase):
     Unit testing:
         - Test with unsolvable board: impossible board
             with no solution
-        - Test with empty board: empty unsolved board
-        - Test with solved board: full solved board
         - Test with multiple solutions: board
             with multiple solutions
 
@@ -115,24 +113,10 @@ class TestSudokuSolver(unittest.TestCase):
             assert solver.solve_sudoku() is None
             pass
 
-    # test with empty board
-    def test_solve_sudoku_empty(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/empty_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
-
     # test with empty text file
     def test_solve_sudoku_empty_text_file(self):
         with self.assertRaises(RuntimeError):
             solver = SudokuSolver("data/empty_text_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
-
-    # test with solved board
-    def test_solve_sudoku_solved(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/solved_file.txt")
             assert solver.solve_sudoku() is None
             pass
 

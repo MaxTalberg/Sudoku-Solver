@@ -8,8 +8,6 @@ read_board_from_file(filename):
 Unit testing:
     - Test with unsolvable board: impossible board
         with no solution
-    - Test with empty board: empty unsolved board
-    - Test with solved board: full solved board
     - Test with multiple solutions: board
         with multiple solutions
 
@@ -113,14 +111,6 @@ class SudokuSolver:
                 ]
                 if len(set(non_zero_square_vals)) != len(non_zero_square_vals):
                     raise ValueError("Duplicate number found in 3x3 square")
-
-        # validate board is not empty
-        if sum(sum(board, [])) == 0:
-            raise ValueError("Board is empty!")
-
-        # validate board is not full
-        if sum(sum(board, [])) == (45 * 9):
-            raise ValueError("Board is already full!")
 
         # Return the matrix of the inserted sudoku board
         return board
