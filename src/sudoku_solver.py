@@ -1,17 +1,3 @@
-"""
-PROTOTYPING
-
-read_board_from_file(filename):
-
-    Read the Sudoku puzzle from input or define it as a 2D array.
-
-Unit testing:
-    - Test with multiple solutions: board
-        with multiple solutions (no unique solutions)
-
-    - Contains less than 17 starting values
-
-"""
 import sys
 import warnings
 
@@ -118,7 +104,10 @@ class SudokuSolver:
             [1 for row in board for number in row if number != 0]
         )
         if non_zero_count < 17:
-            warnings.warn("Board has less than 17 starting values")
+            warnings.warn(
+                "Warning: Board has less than 17 starting values. "
+                "May have multiple solutions."
+            )
 
         # Return the matrix of the inserted sudoku board
         return board

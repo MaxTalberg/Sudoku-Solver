@@ -4,18 +4,6 @@ from src.sudoku_solver import SudokuSolver
 
 
 class TestSudokuSolver(unittest.TestCase):
-    """
-    Unit testing:
-        - Test with multiple solutions: board
-            with multiple solutions
-
-        - Contains less than 17 starting values
-
-    #####################################################
-        Mocking to test logic
-    #####################################################
-    """
-
     # test with non-existent file
     def test_non_existent_file(self):
         with self.assertRaises(RuntimeError):
@@ -137,24 +125,6 @@ class TestSudokuSolver(unittest.TestCase):
                 w[-1].message
             )
             pass
-
-    """# test with solved board
-    def test_solve_sudoku_solved(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/solved_file.txt")
-            assert solver.solve_sudoku() is None
-            pass"""
-
-    """# test with multiple solutions
-    def test_solve_sudoku_multiple_solutions(self):
-        solver = SudokuSolver("multiple_solutions_file.txt")
-        pass"""
-
-    """# test with unsolvable board
-    def test_solve_sudoku_unsolvable(self):
-        solver = SudokuSolver("unsolvable_file.txt")
-        assert solver.solve_sudoku() == None
-        pass"""
 
 
 if __name__ == "__main__":
