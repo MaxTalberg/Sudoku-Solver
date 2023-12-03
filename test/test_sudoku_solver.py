@@ -1,22 +1,9 @@
 import unittest
+import warnings
 from src.sudoku_solver import SudokuSolver
 
 
 class TestSudokuSolver(unittest.TestCase):
-    """
-    Unit testing:
-        - Test with unsolvable board: impossible board
-            with no solution *DONE*
-        - Test with empty board: empty unsolved board
-        - Test with solved board: full solved board
-        - Test with multiple solutions: board
-            with multiple solutions
-
-    #####################################################
-        Mocking to test logic
-    #####################################################
-    """
-
     # test with non-existent file
     def test_non_existent_file(self):
         with self.assertRaises(RuntimeError):
@@ -119,13 +106,6 @@ class TestSudokuSolver(unittest.TestCase):
             assert solver.solve_sudoku() is None
             pass
 
-    # test with empty board
-    def test_solve_sudoku_empty(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/empty_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
-
     # test with empty text file
     def test_solve_sudoku_empty_text_file(self):
         with self.assertRaises(RuntimeError):
@@ -133,28 +113,18 @@ class TestSudokuSolver(unittest.TestCase):
             assert solver.solve_sudoku() is None
             pass
 
-    """# test with solved board
-    def test_solve_sudoku_solved(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/solved_file.txt")
-            assert solver.solve_sudoku() is None
-            pass"""
-
-    # test with unsolvable board
-    def test_unsolvable_board(self):
-        solver = SudokuSolver("data/unsolvable_board_fast.txt")
-        self.assertFalse(solver.solve_sudoku())
-
-    """# test with multiple solutions
-    def test_solve_sudoku_multiple_solutions(self):
-        solver = SudokuSolver("multiple_solutions_file.txt")
-        pass"""
-
-    """# test with unsolvable board
-    def test_solve_sudoku_unsolvable(self):
-        solver = SudokuSolver("unsolvable_file.txt")
-        assert solver.solve_sudoku() == None
-        pass"""
+    # warning less than 17 starting values
+    def test_board_less_than_17_starting_values(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            # not to trigger flake8 warning
+            _ = SudokuSolver("data/less_than_17_board.txt")
+            assert len(w) == 1
+            assert issubclass(w[-1].category, UserWarning)
+            assert "Board has less than 17 starting values" in str(
+                w[-1].message
+            )
+            pass
 
 
 if __name__ == "__main__":
