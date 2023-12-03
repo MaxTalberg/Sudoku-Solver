@@ -1,4 +1,5 @@
 import unittest
+import warnings
 from src.sudoku_solver import SudokuSolver
 
 
@@ -122,6 +123,19 @@ class TestSudokuSolver(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             solver = SudokuSolver("data/empty_text_file.txt")
             assert solver.solve_sudoku() is None
+            pass
+
+    # warning less than 17 starting values
+    def test_board_less_than_17_starting_values(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            # not to trigger flake8 warning
+            _ = SudokuSolver("data/less_than_17_board.txt")
+            assert len(w) == 1
+            assert issubclass(w[-1].category, UserWarning)
+            assert "Board has less than 17 starting values" in str(
+                w[-1].message
+            )
             pass
 
     """# test with solved board
