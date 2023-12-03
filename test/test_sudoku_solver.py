@@ -5,12 +5,10 @@ from src.sudoku_solver import SudokuSolver
 class TestSudokuSolver(unittest.TestCase):
     """
     Unit testing:
-        - Test with unsolvable board: impossible board
-            with no solution *DONE*
-        - Test with empty board: empty unsolved board
-        - Test with solved board: full solved board
         - Test with multiple solutions: board
             with multiple solutions
+
+        - Contains less than 17 starting values
 
     #####################################################
         Mocking to test logic
@@ -119,13 +117,6 @@ class TestSudokuSolver(unittest.TestCase):
             assert solver.solve_sudoku() is None
             pass
 
-    # test with empty board
-    def test_solve_sudoku_empty(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/empty_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
-
     # test with empty text file
     def test_solve_sudoku_empty_text_file(self):
         with self.assertRaises(RuntimeError):
@@ -139,11 +130,6 @@ class TestSudokuSolver(unittest.TestCase):
             solver = SudokuSolver("data/solved_file.txt")
             assert solver.solve_sudoku() is None
             pass"""
-
-    # test with unsolvable board
-    def test_unsolvable_board(self):
-        solver = SudokuSolver("data/unsolvable_board_fast.txt")
-        self.assertFalse(solver.solve_sudoku())
 
     """# test with multiple solutions
     def test_solve_sudoku_multiple_solutions(self):

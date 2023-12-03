@@ -6,13 +6,14 @@ read_board_from_file(filename):
     Read the Sudoku puzzle from input or define it as a 2D array.
 
 Unit testing:
-    - Test with unsolvable board: impossible board
-        with no solution
     - Test with multiple solutions: board
-        with multiple solutions
+        with multiple solutions (no unique solutions)
+
+    - Contains less than 17 starting values
 
 """
 import sys
+import warnings
 
 
 class SudokuSolver:
@@ -111,6 +112,13 @@ class SudokuSolver:
                 ]
                 if len(set(non_zero_square_vals)) != len(non_zero_square_vals):
                     raise ValueError("Duplicate number found in 3x3 square")
+
+        # warning if board has less than 17 starting values
+        non_zero_count = sum(
+            [1 for row in board for number in row if number != 0]
+        )
+        if non_zero_count < 17:
+            warnings.warn("Board has less than 17 starting values")
 
         # Return the matrix of the inserted sudoku board
         return board
