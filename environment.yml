@@ -4,5 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.8.18
+  - flask==2.2.2
+  - Werkzeug 2.2.3
   - pip:
       - pipdeptree==2.13.1
