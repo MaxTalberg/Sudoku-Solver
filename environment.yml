@@ -1,0 +1,8 @@
+name: RC_Coursework
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8.18
+  - pip:
+      - pipdeptree==2.13.1
