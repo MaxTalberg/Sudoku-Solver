@@ -1,0 +1,21 @@
+src package
+===========
+
+Submodules
+----------
+
+src.sudoku\_solver module
+-------------------------
+
+.. automodule:: src.sudoku_solver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: src
+   :members:
+   :undoc-members:
+   :show-inheritance:
