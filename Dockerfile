@@ -19,15 +19,3 @@ EXPOSE 80
 
 # Define environment variable
 ENV RC_Coursework=value
-
-# Run app.py when the container launches
-CMD ["python", "src/webapp/app.py"]
-
-# Copy the entrypoint script into the container
-COPY entrypoint.sh /entrypoint.sh
-
-# Make sure the script is executable
-RUN chmod +x entrypoint.sh
-
-# Use the entrypoint script to start the container
-ENTRYPOINT ["/entrypoint.sh"]

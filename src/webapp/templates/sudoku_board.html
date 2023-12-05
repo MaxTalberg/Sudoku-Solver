@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku Solver</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .sudoku-board {
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        .sudoku-board td {
+            border: 1px solid #000;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 20px;
+        }
+        .sudoku-board tr:nth-child(3) td,
+        .sudoku-board tr:nth-child(6) td {
+            border-bottom: 3px solid #000;
+        }
+        .sudoku-board td:nth-child(3),
+        .sudoku-board td:nth-child(6) {
+            border-right: 3px solid #000;
+        }
+        .file-input-container {
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="file-input-container">
+        <form method="POST" action="/" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit" class="button">Upload</button>
+        </form>
+    </div>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    {% if board %}
+        <div class="container">
+            <h2>Sudoku Solver:</h2>
+            <table class="sudoku-board">
+                {% for row in board %}
+                <tr>
+                    {% for num in row %}
+                    <td>{{ num if num != 0 else "" }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+            <form method="POST" action="/solve">
+                <button type="submit" class="button">Solve</button>
+            </form>
+        </div>
+    {% endif %}
+
+</body>
+</html>

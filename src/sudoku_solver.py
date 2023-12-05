@@ -216,6 +216,19 @@ class SudokuSolver:
         # return formatted board
         return formated_board
 
+    # get board for flask app
+    def get_board(self):
+        """
+        Provides current state of the sudoku board
+
+        Returns
+        ----------
+        board: list(list(int))
+            The current state of the sudoku board
+
+        """
+        return self.board
+
 
 def main():
     # Check the correct number of command line arguements are passsed
