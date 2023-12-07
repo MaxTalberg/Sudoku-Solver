@@ -95,32 +95,42 @@ class SudokuSolver:
             return False
 
         # validate board size
-        if len(self.board) != 9:
+        if len(self.board) != 9 or any(len(row) != 9 for row in self.board):
             raise ValueError("Board size is not 9 x 9")
 
-        # validate there are no duplicates in columns
-        for col in range(len(self.board[0])):
-            non_zero_col_vals = [
-                self.board[row][col]
-                for row in range(len(self.board))
-                if self.board[row][col] != 0
-            ]
-            if len(set(non_zero_col_vals)) != len(non_zero_col_vals):
-                raise ValueError(f"Duplicate number found in column: {col}")
+        # Dictionaries to check for duplicates in rows, columns and 3x3 squares
+        rows = [set() for _ in range(9)]
+        cols = [set() for _ in range(9)]
+        squares = [set() for _ in range(9)]
 
-        # validate there are no duplicates in 3x3 squares
-        for row in range(0, 9, 3):
-            for col in range(0, 9, 3):
-                non_zero_square_vals = [
-                    self.board[row + i][col + j]
-                    for i in range(3)
-                    for j in range(3)
-                    if self.board[row + i][col + j] != 0
-                ]
-                if len(set(non_zero_square_vals)) != len(non_zero_square_vals):
+        # iterate through each row with row_id
+        for row_id, row in enumerate(self.board):
+            # iterate through each value in row with col_id
+            for col_id, value in enumerate(row):
+                if value == 0:
+                    continue
+
+                # stores and checks for duplicates in rows
+                if value in rows[row_id]:
                     raise ValueError(
-                        f"Duplicate number found in 3x3 square: ({row}, {col})"
+                        f"Duplicate number found in row: {row_id}"
                     )
+                rows[row_id].add(value)
+
+                # stores and checks for duplicates in the current column
+                if value in cols[col_id]:
+                    raise ValueError(
+                        f"Duplicate number found in column: {col_id}"
+                    )
+                cols[col_id].add(value)
+
+                # stores and checks for duplicates in 3x3 square
+                square_id = (row_id // 3) * 3 + col_id // 3
+                if value in squares[square_id]:
+                    raise ValueError(
+                        f"Duplicate number found in 3x3 square: {square_id}"
+                    )
+                squares[square_id].add(value)
 
         # warning if board has less than 17 starting values
         non_zero_count = sum(
