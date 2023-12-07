@@ -12,7 +12,11 @@ class SudokuSolver:
         """
         try:
             self.board = self.read_board_from_file(filename)
+            self.convert_board_to_int()
+            for row in self.board:
+                print(row)
             self.validate_board()
+            print("Post vboard:")
         except (FileNotFoundError, ValueError) as error:
             raise RuntimeError(f"Failed to initialise board: {error}")
 
@@ -48,34 +52,53 @@ class SudokuSolver:
                 # then split into numbers
                 row = line.replace("|", "").replace("\n", "")
 
-                # validate row length
-                if len(row) != 9:
-                    raise ValueError(f"Row length error: row {line_number}")
-
-                # Convert each character to an integer
-                try:
-                    row_numbers = [int(char) for char in row]
-
-                    # validate numbers are between 0 and 9
-                    if any(n < 0 or n > 9 for n in row_numbers):
-                        raise ValueError("Invalid number found in row")
-
-                    # validate there are no duplicates in rows
-                    non_zero_row_vals = [
-                        number for number in row_numbers if number != 0
-                    ]
-                    if len(set(non_zero_row_vals)) != len(non_zero_row_vals):
-                        raise ValueError("Duplicate number found in row")
-
-                except ValueError:
-                    # if the character is not an integer
-                    raise ValueError("Invalid character found")
+                row_values = [str(char) for char in row]
 
                 # append row to board
-                board.append(row_numbers)
+                board.append(row_values)
 
         # Return the matrix of the inserted sudoku board
         return board
+
+    def convert_board_to_int(self):
+        """
+        Converts the board to int
+
+        Returns
+        ----------
+        board: list(list(int))
+            The current state of the sudoku board
+        """
+        if self.board is None:
+            return False
+        # initialise empty board
+        converted_board = []
+
+        # iterate through each row with row_id
+        for row_id, row in enumerate(self.board):
+            # initialise empty row
+            converted_row = []
+
+            # iterate through each value in row with col_id
+            for col_id, value in enumerate(row):
+                # convert value to int
+
+                try:
+                    # convert value to int
+                    int_value = int(value)
+                except ValueError:
+                    # if value is not int raise error
+                    raise ValueError(
+                        "Invalid character found at"
+                        f"({row_id}, {col_id}): {value}"
+                    )
+
+                converted_row.append(int_value)
+            converted_board.append(converted_row)
+        self.board = converted_board
+
+        # return True if board is valid
+        return True
 
     def validate_board(self):
         """
@@ -107,11 +130,20 @@ class SudokuSolver:
         for row_id, row in enumerate(self.board):
             # iterate through each value in row with col_id
             for col_id, value in enumerate(row):
+                print(value)
+                print(type(value))
+                # skip if value is 0 as it is a blank square
                 if value == 0:
+                    print("continue?")
                     continue
+
+                # validate numbers are between 0 and 9
+                if value < 0 or value > 9:
+                    raise ValueError("Invalid number found in row")
 
                 # stores and checks for duplicates in rows
                 if value in rows[row_id]:
+                    print(value, rows[row_id])
                     raise ValueError(
                         f"Duplicate number found in row: {row_id}"
                     )
@@ -132,10 +164,24 @@ class SudokuSolver:
                     )
                 squares[square_id].add(value)
 
+        # check row and col length
+        for row in self.board:
+            if len(row) != 9:
+                raise ValueError(
+                    f"Row length error row {row} has {len(row)} columns"
+                )
+
+        for col_id in range(9):
+            if len([self.board[row_id][col_id] for row_id in range(9)]) != 9:
+                col_len = len(
+                    [self.board[row_id][col_id] for row_id in range(9)]
+                )
+                raise ValueError(
+                    f"Column length error column {col_id} has {col_len} rows"
+                )
+
         # warning if board has less than 17 starting values
-        non_zero_count = sum(
-            [1 for row in self.board for number in row if number != 0]
-        )
+        non_zero_count = sum(len(row_len) for row_len in rows)
         if non_zero_count < 17:
             warnings.warn(
                 "Warning: Board has less than 17 starting values. "
