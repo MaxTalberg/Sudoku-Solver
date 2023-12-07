@@ -12,6 +12,7 @@ class SudokuSolver:
         """
         try:
             self.board = self.read_board_from_file(filename)
+            self.validate_board()
         except (FileNotFoundError, ValueError) as error:
             raise RuntimeError(f"Failed to initialise board: {error}")
 
@@ -73,35 +74,57 @@ class SudokuSolver:
                 # append row to board
                 board.append(row_numbers)
 
+        # Return the matrix of the inserted sudoku board
+        return board
+
+    def validate_board(self):
+        """
+        Validates the sudoku board
+
+        Parameters
+        ----------
+        board: list(list(int))
+            The current state of the sudoku board
+
+        Returns
+        ----------
+        board: list(list(int))
+            The validated state of the sudoku board
+        """
+        if self.board is None:
+            return False
+
         # validate board size
-        if len(board) != 9:
+        if len(self.board) != 9:
             raise ValueError("Board size is not 9 x 9")
 
         # validate there are no duplicates in columns
-        for col in range(len(board[0])):
+        for col in range(len(self.board[0])):
             non_zero_col_vals = [
-                board[row][col]
-                for row in range(len(board))
-                if board[row][col] != 0
+                self.board[row][col]
+                for row in range(len(self.board))
+                if self.board[row][col] != 0
             ]
             if len(set(non_zero_col_vals)) != len(non_zero_col_vals):
-                raise ValueError("Duplicate number found in column")
+                raise ValueError(f"Duplicate number found in column: {col}")
 
         # validate there are no duplicates in 3x3 squares
         for row in range(0, 9, 3):
             for col in range(0, 9, 3):
                 non_zero_square_vals = [
-                    board[row + i][col + j]
+                    self.board[row + i][col + j]
                     for i in range(3)
                     for j in range(3)
-                    if board[row + i][col + j] != 0
+                    if self.board[row + i][col + j] != 0
                 ]
                 if len(set(non_zero_square_vals)) != len(non_zero_square_vals):
-                    raise ValueError("Duplicate number found in 3x3 square")
+                    raise ValueError(
+                        f"Duplicate number found in 3x3 square: ({row}, {col})"
+                    )
 
         # warning if board has less than 17 starting values
         non_zero_count = sum(
-            [1 for row in board for number in row if number != 0]
+            [1 for row in self.board for number in row if number != 0]
         )
         if non_zero_count < 17:
             warnings.warn(
@@ -109,8 +132,8 @@ class SudokuSolver:
                 "May have multiple solutions."
             )
 
-        # Return the matrix of the inserted sudoku board
-        return board
+        # return True if board is valid
+        return True
 
     def check_possible_indicies(self, x, y, n):
         """

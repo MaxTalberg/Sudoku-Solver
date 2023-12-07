@@ -89,21 +89,21 @@ class TestSudokuSolver(unittest.TestCase):
     def test_indicies_invalid_row(self):
         with self.assertRaises(RuntimeError):
             solver = SudokuSolver("data/invalid_row_file.txt")
-            assert solver.solve_sudoku() is None
+            self.assertFalse(solver.solve_sudoku())
             pass
 
     # test with invalid column
     def test_indicies_invalid_column(self):
         with self.assertRaises(RuntimeError):
             solver = SudokuSolver("data/invalid_column_file.txt")
-            assert solver.solve_sudoku() is None
+            self.assertFalse(solver.solve_sudoku())
             pass
 
     # test with invalid 3x3 square
     def test_indicies_invalid_square(self):
         with self.assertRaises(RuntimeError):
             solver = SudokuSolver("data/invalid_square_file.txt")
-            assert solver.solve_sudoku() is None
+            self.assertFalse(solver.solve_sudoku())
             pass
 
     # test with empty text file
