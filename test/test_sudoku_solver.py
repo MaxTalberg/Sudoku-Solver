@@ -1,26 +1,29 @@
 import unittest
 import warnings
-from src.sudoku_solver import SudokuSolver
+from src.sudoku_reader import SudokuReader
+from src.sudoku_board import SudokuBoard
+from src.sudoku_algorithm import SudokuAlgorithm
 
 
 class TestSudokuSolver(unittest.TestCase):
     # test with non-existent file
     def test_non_existent_file(self):
         with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/non_existent_file.txt")
-            assert solver.puzzle is None
+            SudokuReader("data/non_existent_file.txt")
             pass
 
     # test with invalid file
     def test_read_board_from_invalid_file(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_file.txt")
-            assert solver.puzzle is None
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_file.txt")
+            SudokuBoard(reader.board)
             pass
 
     # test with valid file
     def test_read_board_from_file_valid(self):
-        solver = SudokuSolver("data/valid_file.txt")
+        reader = SudokuReader("data/valid_file.txt")
+        board = SudokuBoard(reader.board)
+
         expected_board = [
             [0, 0, 0, 0, 0, 7, 0, 0, 0],
             [0, 0, 0, 0, 0, 9, 5, 0, 4],
@@ -32,12 +35,14 @@ class TestSudokuSolver(unittest.TestCase):
             [1, 0, 3, 9, 0, 0, 0, 0, 0],
             [0, 0, 0, 6, 0, 0, 0, 0, 0],
         ]
-        self.assertEqual(solver.board, expected_board)
+        self.assertEqual(board.board, expected_board)
         pass
 
     # test with solvable board
     def test_solve_sudoku_solvable(self):
-        solver = SudokuSolver("data/valid_file.txt")
+        reader = SudokuReader("data/valid_file.txt")
+        board = SudokuBoard(reader.board)
+        solver = SudokuAlgorithm(board.board)
         expected_board = [
             [5, 9, 4, 1, 6, 7, 8, 3, 2],
             [6, 1, 8, 2, 3, 9, 5, 7, 4],
@@ -58,67 +63,65 @@ class TestSudokuSolver(unittest.TestCase):
 
     # test with invalid board size
     def test_solve_sudoku_invalid_size(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_size_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_size_file.txt")
+            SudokuBoard(reader.board)
 
     # test with invalid characters
     def test_solve_sudoku_invalid_characters(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_characters_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_characters_file.txt")
+            SudokuBoard(reader.board)
 
     # test with true and false values
     def test_check_possible_indicies_true(self):
-        solver = SudokuSolver("data/valid_file.txt")
+        reader = SudokuReader("data/valid_file.txt")
+        board = SudokuBoard(reader.board)
+        solver = SudokuAlgorithm(board.board)
+
         # check if number n cannot be here
-        assert solver.check_possible_indicies(0, 0, 7) is False
-        assert solver.check_possible_indicies(1, 1, 9) is False
-        assert solver.check_possible_indicies(2, 2, 5) is False
-        assert solver.check_possible_indicies(3, 3, 3) is False
+        self.assertFalse(solver.check_possible_indicies(0, 0, 7))
+        self.assertFalse(solver.check_possible_indicies(1, 1, 9))
+        self.assertFalse(solver.check_possible_indicies(2, 2, 5))
+        self.assertFalse(solver.check_possible_indicies(3, 3, 3))
+
         # check if number n can be here
-        assert solver.check_possible_indicies(0, 8, 5) is True
-        assert solver.check_possible_indicies(8, 0, 3) is True
-        assert solver.check_possible_indicies(8, 8, 3) is True
-        assert solver.check_possible_indicies(4, 4, 3) is True
+        self.assertTrue(solver.check_possible_indicies(0, 8, 5))
+        self.assertTrue(solver.check_possible_indicies(8, 0, 3))
+        self.assertTrue(solver.check_possible_indicies(8, 8, 3))
+        self.assertTrue(solver.check_possible_indicies(4, 4, 3))
         pass
 
     # test with invalid row
     def test_indicies_invalid_row(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_row_file.txt")
-            self.assertFalse(solver.solve_sudoku())
-            pass
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_row_file.txt")
+            SudokuBoard(reader.board)
 
     # test with invalid column
     def test_indicies_invalid_column(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_column_file.txt")
-            self.assertFalse(solver.solve_sudoku())
-            pass
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_column_file.txt")
+            SudokuBoard(reader.board)
 
     # test with invalid 3x3 square
     def test_indicies_invalid_square(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/invalid_square_file.txt")
-            self.assertFalse(solver.solve_sudoku())
-            pass
+        with self.assertRaises(ValueError):
+            SudokuBoard("data/invalid_square_file.txt")
 
     # test with empty text file
     def test_solve_sudoku_empty_text_file(self):
-        with self.assertRaises(RuntimeError):
-            solver = SudokuSolver("data/empty_text_file.txt")
-            assert solver.solve_sudoku() is None
-            pass
+        with self.assertRaises(ValueError):
+            reader = SudokuBoard("data/empty_file.txt")
+            SudokuBoard(reader.board)
 
     # warning less than 17 starting values
     def test_board_less_than_17_starting_values(self):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
             # not to trigger flake8 warning
-            _ = SudokuSolver("data/less_than_17_board.txt")
+            reader = SudokuReader("data/less_than_17_board.txt")
+            _ = SudokuBoard(reader.board)
             assert len(w) == 1
             assert issubclass(w[-1].category, UserWarning)
             assert "Board has less than 17 starting values" in str(
