@@ -2,6 +2,7 @@ import sys
 from sudoku_reader import SudokuReader
 from sudoku_board import SudokuBoard
 from sudoku_algorithm import SudokuAlgorithm
+from sudoku_format import SudokuFormat
 
 
 def main():
@@ -29,8 +30,8 @@ def main():
     # solve sudoku
     if solver.solve_sudoku():
         # get formated sudoku board
-        solved_board = sudoku.format_sudoku_board()
-        print(solved_board)
+        formatter = SudokuFormat(solver.board)
+        print(formatter.format_sudoku_board())
     else:
         raise ValueError("Unsolvable sudoku")
 

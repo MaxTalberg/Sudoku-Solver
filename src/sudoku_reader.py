@@ -51,5 +51,9 @@ class SudokuReader:
                 # append row to board
                 board.append(row_values)
 
+        # Check if file is empty
+        if not board:
+            raise ValueError("File is empty")
+
         # Return the matrix of the inserted sudoku board
         return board
