@@ -15,14 +15,14 @@ class SudokuBoard:
 
         Parameters
         ----------
-        board: list(list(str))
-            The current state of the sudoku board
+        board : list[list[str]]
+            The current state of the sudoku board as a list of string lists.
 
         Raises
-        ----------
-        ValueError:
-            Failed to convert board to integers
-            If the board is not valid
+        ------
+        ValueError
+            If the conversion to integers fails or the board is not valid.
+
         """
         self.board = board
 
@@ -38,15 +38,14 @@ class SudokuBoard:
         2D list of integers
 
         Returns
-        ----------
+        -------
         bool:
             True if the sudoku board is valid
 
         Raises
-        ----------
+        ------
         ValueError:
-            If the board is not initialised
-            If the board contains invalid characters
+            If the board is not initialised or contains invalid characters
         """
         if self.board is None:
             raise ValueError("Board is not initialised")
@@ -94,12 +93,12 @@ class SudokuBoard:
             - For empty boards
 
         Returns
-        ----------
+        -------
         bool:
             True is the board is valid, False otherwise
 
         Raises
-        ----------
+        ------
         ValueError:
             If the board is not initialised
             If the board size is not 9x9
@@ -107,9 +106,10 @@ class SudokuBoard:
             If the board contains duplicates in rows, columns or 3x3 squares
             If the row or column length is not 9
 
-        Warnings:
-            If the board has less than 17 starting values
-            If the board is empty
+        Warnings
+        --------
+        UserWarning:
+            If the board has less than 17 starting values or is empty
 
         """
         # check for empty board

@@ -10,7 +10,7 @@ class SudokuFormat:
 
         Parameters
         ----------
-        board: list(list(int))
+        board: list[list[int]]
             The current state of the sudoku board
 
         """
@@ -21,8 +21,8 @@ class SudokuFormat:
         Formats the sudoku board to the desired format
 
         Returns
-        ----------
-        formated_board: (str)
+        -------
+        formated_board: str
             The formatted sudoku board
         """
         # initialise empty string

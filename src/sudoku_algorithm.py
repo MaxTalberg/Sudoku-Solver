@@ -10,8 +10,8 @@ class SudokuAlgorithm:
 
         Parameters
         ----------
-        board: list(list(int))
-            The current state of the sudoku board
+        board : list[list[int]]
+            The current state of the sudoku board.
 
         """
         self.board = board
@@ -23,17 +23,15 @@ class SudokuAlgorithm:
 
         Parameters
         ----------
-        x: (int)
-            Column number of the sudoku board
-
-        y: (int)
-            Row number of the sudoku board
-
-        n: (int)
-            indicie to check in the grid square
+        x : int
+            Column number of the sudoku board.
+        y : int
+            Row number of the sudoku board.
+        n : int
+            Number to check in the grid square.
 
         Returns
-        ----------
+        -------
         bool:
             True if number is allowed, False otherwise
         """
@@ -64,10 +62,9 @@ class SudokuAlgorithm:
         this function utlises the backtracking algorithm
 
         Returns
-        ----------
+        -------
         bool:
             True if the board is solved, False otherwise
-
         """
         if self.board is None:
             # print("Error: No board found")
