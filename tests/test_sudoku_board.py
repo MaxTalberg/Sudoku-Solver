@@ -5,16 +5,31 @@ from src.sudoku_board import SudokuBoard
 
 
 class TestSudokuBoard(unittest.TestCase):
-    # test with invalid file
-    def test_read_board_from_invalid_file(self):
-        with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_file.txt")
-            SudokuBoard(reader.board)
-            pass
+    """
+    Test cases for the SudokuBoard class
 
-    # test with valid file
+    The SudokuBoard class is responsible for verifying the sudoku board from
+    an array.
+
+    These tests ensure the class handles various validation and array
+    scenarios correctly.
+    """
+
+    def test_raise_error_for_invalid_file(self):
+        """
+        Test that the SudokuBoard class raises
+        a ValueError when the file is invalid
+        """
+        with self.assertRaises(ValueError):
+            reader = SudokuReader("data/invalid_board.txt")
+            SudokuBoard(reader.board)
+
     def test_read_board_from_file_valid(self):
-        reader = SudokuReader("data/valid_file.txt")
+        """
+        Test that the SudokuBoard class reads
+        a valid board correctly
+        """
+        reader = SudokuReader("data/valid_board.txt")
         board = SudokuBoard(reader.board)
 
         expected_board = [
@@ -29,60 +44,77 @@ class TestSudokuBoard(unittest.TestCase):
             [0, 0, 0, 6, 0, 0, 0, 0, 0],
         ]
         self.assertEqual(board.board, expected_board)
-        pass
 
-    # test with invalid board size
-    def test_solve_sudoku_invalid_size(self):
+    def test_raise_error_for_invalid_size_board(self):
+        """
+        Test that the SudokuBoard class raises a
+        ValueError when the sudoku board is not 9x9
+        """
         with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_size_file.txt")
+            reader = SudokuReader("data/invalid_size_board.txt")
             SudokuBoard(reader.board)
 
-    # test with invalid characters
-    def test_solve_sudoku_invalid_characters(self):
+    def test_raise_error_for_invalid_characters_board(self):
+        """
+        Test that the SudokuBoard class raises a ValueError
+        when the sudoku board contains invalid characters
+        """
         with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_characters_file.txt")
+            reader = SudokuReader("data/invalid_characters_board.txt")
             SudokuBoard(reader.board)
 
-        # test with invalid row
-
-    def test_indicies_invalid_row(self):
+    def test__raise_error_for_invalid_row_board(self):
+        """
+        Test that the SudokuBoard class raises a ValueError
+        when the sudoku board contains a row with duplicate values
+        """
         with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_row_file.txt")
+            reader = SudokuReader("data/invalid_row_board.txt")
             SudokuBoard(reader.board)
 
-    # test with invalid column
-    def test_indicies_invalid_column(self):
+    def test__raise_error_for_invalid_column_board(self):
+        """
+        Test that the SudokuBoard class raises a ValueError
+        when the sudoku board contains a column with duplicate values
+        """
         with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_column_file.txt")
+            reader = SudokuReader("data/invalid_column_board.txt")
             SudokuBoard(reader.board)
 
-    # test with invalid 3x3 square
-    def test_indicies_invalid_square(self):
+    def test__raise_error_for_invalid_square_board(self):
+        """
+        Test that the SudokuBoard class raises a ValueError
+        when the sudoku board contains a 3x3 square with duplicate values
+        """
         with self.assertRaises(ValueError):
-            reader = SudokuReader("data/invalid_square_file.txt")
+            reader = SudokuReader("data/invalid_square_board.txt")
             SudokuBoard(reader.board)
 
-        # test with empty text file
-
-    def test_solve_sudoku_empty_text_file(self):
-        with self.assertRaises(ValueError):
-            reader = SudokuBoard("data/empty_file.txt")
-            SudokuBoard(reader.board)
-
-        # warning less than 17 starting values
-
-    def test_board_less_than_17_starting_values(self):
+    def test_warning_for_empty_board(self):
+        """
+        Test that the SudokuBoard class raises a warning
+        when the sudoku board is empty
+        """
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            # not to trigger flake8 warning
+            reader = SudokuReader("data/empty_board.txt")
+            _ = SudokuBoard(reader.board)
+            self.assertIn("Warning: Board is empty", str(w[-1].message))
+
+    def test_warning_for_less_than_17_starting_values(self):
+        """
+        Test that the SudokuBoard class raises a warning
+        when the sudoku board contains less than 17 starting values
+        as this could result in multiple solutions
+        """
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
             reader = SudokuReader("data/less_than_17_board.txt")
             _ = SudokuBoard(reader.board)
             assert len(w) == 1
             assert issubclass(w[-1].category, UserWarning)
-            assert "Board has less than 17 starting values" in str(
-                w[-1].message
-            )
-            pass
+            assert "Warning: Board has less than 17 starting values. "
+            "May have multiple solutions." in str(w[-1].message)
 
 
 if __name__ == "__main__":

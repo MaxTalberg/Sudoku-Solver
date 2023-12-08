@@ -3,8 +3,18 @@ from src.sudoku_format import SudokuFormat
 
 
 class TestSudokuFormat(unittest.TestCase):
-    # test formatting works as expected
+    """
+    Test cases for the SudokuFormat class
+
+    The SudokuFormat class is responsible for converting the solved
+    sudoku array into the correct format for printing to the console.
+    """
+
     def test_correct_formatting(self):
+        """
+        Test that the class formats the
+        solved sudoku board correctly
+        """
         solved_board = [
             [5, 9, 4, 1, 6, 7, 8, 3, 2],
             [6, 1, 8, 2, 3, 9, 5, 7, 4],

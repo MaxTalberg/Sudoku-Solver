@@ -29,7 +29,8 @@ class SudokuBoard:
             The current state of the sudoku board
         """
         if self.board is None:
-            raise ValueError("Board is None")
+            raise ValueError("Board is not initialised")
+
         # initialise empty board
         converted_board = []
 
@@ -73,8 +74,9 @@ class SudokuBoard:
         board: list(list(int))
             The validated state of the sudoku board
         """
+        # check for empty board
         if self.board is None:
-            raise ValueError("Board is None")
+            raise ValueError("Board is not initialised")
 
         # validate board size
         if len(self.board) != 9 or any(len(row) != 9 for row in self.board):
@@ -142,6 +144,8 @@ class SudokuBoard:
                 "Warning: Board has less than 17 starting values. "
                 "May have multiple solutions."
             )
+        if non_zero_count == 0:
+            warnings.warn("Warning: Board is empty")
 
         # return True if board is valid
         return True

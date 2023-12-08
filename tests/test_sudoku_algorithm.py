@@ -5,27 +5,41 @@ from src.sudoku_algorithm import SudokuAlgorithm
 
 
 class TestSudokuAlgorithm(unittest.TestCase):
-    # test with true and false values
+    """
+    Test cases for the SudokuAlgorithm class
+
+    The SudokuAlgorithm class is responsible for solving a sudoku board
+    using a backtracking algorithm from the validated array.
+
+    These tests ensure the class handles the validated array as expected
+    and provides the correct outputs.
+    """
+
     def test_check_possible_indicies_true(self):
-        reader = SudokuReader("data/valid_file.txt")
+        """
+        Test that the SudokuAlgorithm class returns True
+        and False where expected during the backtracking algorithm
+        """
+        reader = SudokuReader("data/valid_board.txt")
         board = SudokuBoard(reader.board)
         solver = SudokuAlgorithm(board.board)
 
-        # check if number n cannot be here
         self.assertFalse(solver.check_possible_indicies(0, 0, 7))
         self.assertFalse(solver.check_possible_indicies(1, 1, 9))
         self.assertFalse(solver.check_possible_indicies(2, 2, 5))
         self.assertFalse(solver.check_possible_indicies(3, 3, 3))
 
-        # check if number n can be here
         self.assertTrue(solver.check_possible_indicies(0, 8, 5))
         self.assertTrue(solver.check_possible_indicies(8, 0, 3))
         self.assertTrue(solver.check_possible_indicies(8, 8, 3))
         self.assertTrue(solver.check_possible_indicies(4, 4, 3))
-        pass
 
     def test_solve_sudoku_solvable(self):
-        reader = SudokuReader("data/valid_file.txt")
+        """
+        Test that the SudokuAlgorithm class returns the
+        expected board for a known solvable sudoku board
+        """
+        reader = SudokuReader("data/valid_board.txt")
         board = SudokuBoard(reader.board)
         solver = SudokuAlgorithm(board.board)
         expected_board = [
@@ -39,12 +53,9 @@ class TestSudokuAlgorithm(unittest.TestCase):
             [1, 4, 3, 9, 7, 2, 6, 5, 8],
             [8, 5, 9, 6, 1, 3, 4, 2, 7],
         ]
-        # switched solved to True, check solves puzzle
-        self.assertTrue(solver.solve_sudoku())
 
-        # check if board matches expected board
+        self.assertTrue(solver.solve_sudoku())
         self.assertEqual(solver.board, expected_board)
-        pass
 
 
 if __name__ == "__main__":
