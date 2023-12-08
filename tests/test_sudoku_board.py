@@ -8,10 +8,10 @@ class TestSudokuBoard(unittest.TestCase):
     """
     Test cases for the SudokuBoard class
 
-    The SudokuBoard class is responsible for verifying the sudoku board from
-    an array.
+    The SudokuBoard class is responsible for verifying the sudoku board
+    from the given sudoku board (2D list).
 
-    These tests ensure the class handles various validation and array
+    These tests ensure the class handles various validation and 2D list
     scenarios correctly.
     """
 

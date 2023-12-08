@@ -7,7 +7,7 @@ class TestSudokuFormat(unittest.TestCase):
     Test cases for the SudokuFormat class
 
     The SudokuFormat class is responsible for converting the solved
-    sudoku array into the correct format for printing to the console.
+    sudoku 2D list into the correct format for printing to the console.
     """
 
     def test_correct_formatting(self):

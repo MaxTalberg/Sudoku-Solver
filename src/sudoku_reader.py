@@ -1,13 +1,26 @@
 class SudokuReader:
     """
-    Class to read sudoku board
-    from a text file
+    Handles the reading of a sudoku board from a
+    text file and initialising a sudoku board as
+    a list of lists for further processing
     """
 
     # initialise board from file
     def __init__(self, filename):
         """
-        Initialises the sudoku board from a given file
+        Initialises the SudokuReader class with
+        a sudoku board from the given file
+
+        Parameters
+        __________
+        filename: (str)
+            Path to the text file containing the sudoku puzzle.
+
+        Raises
+        __________
+        RuntimeError:
+            If the file is not found, invalid or is empty.
+
         """
         try:
             self.board = self.read_board_from_file(filename)
@@ -22,14 +35,20 @@ class SudokuReader:
 
         Parameters
         ----------
-        filename: str
-            numbers for the initial sudoku board
+        filename: (str)
+            Path to the text file containing the sudoku puzzle.
 
         Returns
         ----------
-        list(int)
-            A list of lists representing each row
-            of the initial sudoko board
+        list: list(list(str))
+            A 2D list representing each row of the
+            initial sudoko board
+
+        Raises
+        __________
+        RuntimeError:
+            If the file is not found, invalid or is empty
+
 
         """
 

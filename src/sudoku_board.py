@@ -3,13 +3,26 @@ import warnings
 
 class SudokuBoard:
     """
-    Class to deal with the sudoku board
+    Handles the validation process of the sudoku board
+    from a 2D list and converts the board to integers
     """
 
     def __init__(self, board):
         """
-        Initialises the sudoku board from
-        sudoku_reader.py
+        Initialises the SudokuBoard class by converting
+        the input string into integers and validating the
+        rules of sudoku are met and edge cases are covered
+
+        Parameters
+        ----------
+        board: list(list(str))
+            The current state of the sudoku board
+
+        Raises
+        ----------
+        ValueError:
+            Failed to convert board to integers
+            If the board is not valid
         """
         self.board = board
 
@@ -21,12 +34,19 @@ class SudokuBoard:
 
     def convert_board_to_int(self):
         """
-        Converts the board to int
+        Converts the 2D list of strings to a
+        2D list of integers
 
         Returns
         ----------
-        board: list(list(int))
-            The current state of the sudoku board
+        bool:
+            True if the sudoku board is valid
+
+        Raises
+        ----------
+        ValueError:
+            If the board is not initialised
+            If the board contains invalid characters
         """
         if self.board is None:
             raise ValueError("Board is not initialised")
@@ -62,17 +82,35 @@ class SudokuBoard:
 
     def validate_board(self):
         """
-        Validates the sudoku board
+        Validates the sudoku board by:
+            - Ensuring the board is initialised
+            - Checks the board size is 9x9
+            - Checks for invalid numbers outside of 0-9
+            - Detects duplicates in rows, columns and 3x3 squares
+            - Confirms each row and column is of 9
 
-        Parameters
-        ----------
-        board: list(list(int))
-            The current state of the sudoku board
+        Issues warnings:
+            - For boards with has less than 17 starting values
+            - For empty boards
 
         Returns
         ----------
-        board: list(list(int))
-            The validated state of the sudoku board
+        bool:
+            True is the board is valid, False otherwise
+
+        Raises
+        ----------
+        ValueError:
+            If the board is not initialised
+            If the board size is not 9x9
+            If the board contains invalid numbers outside of 0-9
+            If the board contains duplicates in rows, columns or 3x3 squares
+            If the row or column length is not 9
+
+        Warnings:
+            If the board has less than 17 starting values
+            If the board is empty
+
         """
         # check for empty board
         if self.board is None:

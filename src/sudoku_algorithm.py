@@ -1,13 +1,18 @@
 class SudokuAlgorithm:
     """
-    Class to solve the sudoku puzzle
-    using the backtracking algorithm
+    Handles the solving process of the sudoku board via a backtracking
+    algorithm. This class converts an unsovled 2D list to a solved 2D list
     """
 
     def __init__(self, board):
         """
-        Initialises the sudoku board from
-        sudoku_board.py
+        Initialises the SudokuAlgorithm with a given sudoku board
+
+        Parameters
+        ----------
+        board: list(list(int))
+            The current state of the sudoku board
+
         """
         self.board = board
 
@@ -18,21 +23,18 @@ class SudokuAlgorithm:
 
         Parameters
         ----------
-        board: list(list(int))
-            The current state of the sudoku board
-
-        x: int
+        x: (int)
             Column number of the sudoku board
 
-        y: int
+        y: (int)
             Row number of the sudoku board
 
-        n: int
+        n: (int)
             indicie to check in the grid square
 
         Returns
         ----------
-        Boolean
+        bool:
             True if number is allowed, False otherwise
         """
         if self.board is None:
@@ -58,18 +60,13 @@ class SudokuAlgorithm:
 
     def solve_sudoku(self):
         """
-        Solves the sudoku by recurssion of
-        possbile indicies
-
-        Parameters
-        ----------
-        board: list(list(int))
-            The current state of the sudoku board
+        Solves the sudoku by recurssion of possbile indicies
+        this function utlises the backtracking algorithm
 
         Returns
         ----------
-        board: list(list(int))
-            The solved sudoku board
+        bool:
+            True if the board is solved, False otherwise
 
         """
         if self.board is None:

@@ -9,9 +9,9 @@ class TestSudokuAlgorithm(unittest.TestCase):
     Test cases for the SudokuAlgorithm class
 
     The SudokuAlgorithm class is responsible for solving a sudoku board
-    using a backtracking algorithm from the validated array.
+    using a backtracking algorithm from the validated 2D list.
 
-    These tests ensure the class handles the validated array as expected
+    These tests ensure the class handles the validated 2D list as expected
     and provides the correct outputs.
     """
 

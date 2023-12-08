@@ -1,22 +1,28 @@
 class SudokuFormat:
     """
-    Class to deal with the sudoku board
+    Handles the final formatting of the sudoku board
+    from a 2D list to the desired output format for the console
     """
 
     def __init__(self, board):
         """
-        Initialises the sudoku board from
-        sudoku_algorithm.py
+        Initialises the SudokuFormat with a given sudoku board
+
+        Parameters
+        ----------
+        board: list(list(int))
+            The current state of the sudoku board
+
         """
         self.board = board
 
     def format_sudoku_board(self):
         """
-        Formats the sudoku board
+        Formats the sudoku board to the desired format
 
         Returns
         ----------
-        formated_board: str
+        formated_board: (str)
             The formatted sudoku board
         """
         # initialise empty string
