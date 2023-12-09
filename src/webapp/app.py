@@ -1,8 +1,7 @@
 from flask import Flask, request, render_template
-from sudoku_solver import SudokuSolver
-import sys
-
-sys.path.insert(1, "src/")
+from ..sudoku_reader import SudokuReader
+from ..sudoku_board import SudokuBoard
+from ..sudoku_algorithm import SudokuAlgorithm
 
 
 app = Flask(__name__)
@@ -20,8 +19,9 @@ def upload():
 
             try:
                 # initialise and solve sudoku
-                sudoku_solver = SudokuSolver(filename)
-                board = sudoku_solver.board
+                reader = SudokuReader(filename)
+                sudoku = SudokuBoard(reader.board)
+                board = sudoku.board
                 return render_template(
                     "sudoku_board.html",
                     board=board,
@@ -44,9 +44,13 @@ def solve():
 
     try:
         filename = "input.txt"
-        sudoku_solver = SudokuSolver(filename)
-        if sudoku_solver.solve_sudoku():
-            board = sudoku_solver.get_board()
+        reader = SudokuReader(filename)
+        sudoku = SudokuBoard(reader.board)
+        board = sudoku.board
+        solver = SudokuAlgorithm(board)
+        solver.solve_sudoku()
+        if solver.solve_sudoku():
+            board = solver.board
             return render_template(
                 "sudoku_board.html", board=board, error_message=error_message
             )
