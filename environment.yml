@@ -1,10 +1,4 @@
-name: RC_Coursework
+name: enviroment_name
 channels:
-  - conda-forge
   - defaults
-dependencies:
-  - python=3.8.18
-  - flask==2.2.2
-  - Werkzeug 2.2.3
-  - pip:
-      - pipdeptree==2.13.1
+prefix: /Users/maxtalberg/miniconda3/envs/enviroment_name
