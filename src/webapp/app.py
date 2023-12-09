@@ -1,38 +1,63 @@
-from flask import Flask, request, redirect, url_for
-import os
+from flask import Flask, request, render_template
+from sudoku_solver import SudokuSolver
+import sys
+
+sys.path.insert(1, "src/")
+
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["GET", "POST"])
-def upload_text_file():
-    if request.method == "POST":
-        # check if the post request has the file part
-        if "file" not in request.files:
-            return redirect(request.url)
-        file = request.files["file"]
+def upload():
+    error_message = None
 
+    if request.method == "POST":
+        file = request.files.get("file")
         if file and file.filename != "":
             filename = "input.txt"
-            file.save(os.path.join("/src", filename))
-            return redirect(url_for("uploaded_file", filename=filename))
+            file.save(filename)
 
-        # solve sudoku
-    return """
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    """
+            try:
+                # initialise and solve sudoku
+                sudoku_solver = SudokuSolver(filename)
+                board = sudoku_solver.board
+                return render_template(
+                    "sudoku_board.html",
+                    board=board,
+                    error_message=error_message,
+                )
+            except ValueError as e:
+                error_message = str(e)
+
+        else:
+            error_message = "No file selected"
+
+    return render_template(
+        "sudoku_board.html", board=None, error_message=error_message
+    )
 
 
-@app.route("/uploads/<filename>")
-def uploaded_file(filename):
-    # Run your sudoku solver script here and return the output
-    return "File uploaded successfully"
+@app.route("/solve", methods=["POST"])
+def solve():
+    error_message = None
+
+    try:
+        filename = "input.txt"
+        sudoku_solver = SudokuSolver(filename)
+        if sudoku_solver.solve_sudoku():
+            board = sudoku_solver.get_board()
+            return render_template(
+                "sudoku_board.html", board=board, error_message=error_message
+            )
+        else:
+            error_message = "Unsolvable sudoku"
+    except ValueError as e:
+        error_message = str(e)
+
+    return render_template(
+        "sudoku_board.html", board=None, error_message=error_message
+    )
 
 
 if __name__ == "__main__":
