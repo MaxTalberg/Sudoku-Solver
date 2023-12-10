@@ -1,4 +1,8 @@
-name: enviroment_name
+name: sudoku_env
 channels:
   - defaults
-prefix: /Users/maxtalberg/miniconda3/envs/enviroment_name
+  - conda-forge
+dependencies:
+  - python=3.8.18
+  - flask=2.2.3
+  - werkzeug=2.2.3

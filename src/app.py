@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template
-from ..sudoku_reader import SudokuReader
-from ..sudoku_board import SudokuBoard
-from ..sudoku_algorithm import SudokuAlgorithm
+from sudoku_reader import SudokuReader
+from sudoku_board import SudokuBoard
+from sudoku_algorithm import SudokuAlgorithm
 
 
 # initialise the app
-app = Flask(__name__)
+app = Flask(__name__, template_folder="webapp/templates")
 
 
 # decorator for the home page of the app and defines the upload method
