@@ -57,6 +57,16 @@ class SudokuAlgorithm:
         return True
 
     def find_mrv_cell(self):
+        """
+        Finds the cells with the minimum remaining values (MRV)
+        and returns the cell with the least amount of possible values
+
+        Returns
+        -------
+        tuple:
+            The x and y coordinate of the cell with the least amount of
+            possible values or None if no cell exists
+        """
         # initial mrv score greater than any possible score
         mrv = 10
         mrv_cell = None
