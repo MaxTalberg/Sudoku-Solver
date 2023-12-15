@@ -56,6 +56,25 @@ class SudokuAlgorithm:
         # return True if intiger is allowed on square x, y
         return True
 
+    def find_mrv_cell(self):
+        # initial mrv score greater than any possible score
+        mrv = 10
+        mrv_cell = None
+
+        for y in range(9):
+            for x in range(9):
+                if self.board[y][x] == 0:
+                    # find number of possible values for cell
+                    possible_values = sum(
+                        self.check_possible_indicies(x, y, n)
+                        for n in range(1, 10)
+                    )
+                    if possible_values < mrv:
+                        mrv = possible_values
+                        mrv_cell = (x, y)
+
+        return mrv_cell
+
     def solve_sudoku(self):
         """
         Solves the sudoku by recurssion of possbile indicies
@@ -67,20 +86,19 @@ class SudokuAlgorithm:
             True if the board is solved, False otherwise
         """
         if self.board is None:
-            # print("Error: No board found")
             raise ValueError("No board found")
-        # checks if square is blank, contains a 0
-        for y in range(9):
-            for x in range(9):
-                if self.board[y][x] == 0:
-                    for n in range(1, 10):
-                        if self.check_possible_indicies(x, y, n):
-                            self.board[y][x] = n
-                            if self.solve_sudoku():
-                                return True
-                            self.board[y][x] = 0
-                    # check if square is unsovleable
-                    return False
 
-        # If entire board is filled without issues, return True
-        return True
+        mrv_cell = self.find_mrv_cell()
+        if mrv_cell is None:
+            return True
+
+        x, y = mrv_cell
+
+        for n in range(1, 10):
+            if self.check_possible_indicies(x, y, n):
+                self.board[y][x] = n
+                if self.solve_sudoku():
+                    return True
+                self.board[y][x] = 0
+        # check if board is unsovleable
+        return False
