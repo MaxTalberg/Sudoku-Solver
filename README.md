@@ -13,8 +13,7 @@ This application can be run in two modes using Docker: as a command-line tool to
 **Clone the Repository:**
    - First, clone the repository from GitLab:
      ```bash
-     git clone git@gitlab.developers.cam.ac.uk:phy/\n
-     data-intensive-science-mphil/c1_assessment/mt942.git
+     git clone git@gitlab.developers.cam.ac.uk:phy/data-intensive-science-mphil/c1_assessment/mt942.git
      ```
    - Navigate to the project directory:
      ```bash
@@ -80,8 +79,7 @@ This section provides instructions on how to run the Sudoku Solver project direc
 1. **Clone the Repository:**
    - Clone the repository from GitLab:
      ```bash
-     git clone git@gitlab.developers.cam.ac.uk:phy/\n
-     data-intensive-science-mphil/c1_assessment/mt942.git
+     git clone git@gitlab.developers.cam.ac.uk:phy/data-intensive-science-mphil/c1_assessment/mt942.git
      ```
 
 2. **Set Up a Virtual Environment:**
