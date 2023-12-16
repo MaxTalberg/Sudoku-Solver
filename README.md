@@ -15,6 +15,10 @@ This application can be run in two modes using Docker: as a command-line tool to
      ```bash
      git clone git@gitlab.developers.cam.ac.uk:phy/data-intensive-science-mphil/c1_assessment/mt942.git
      ```
+   - Navigate to the project directory:
+     ```bash
+     cd mt942
+     ```
 
 **Build the Docker Image:**
    - Build the Docker image:
@@ -25,11 +29,11 @@ This application can be run in two modes using Docker: as a command-line tool to
 
 #### Internal files
 **Run the Docker Container:**
-   - Execute the following command in your terminal, to access internal data files contained in Docker:
+   - Execute the following command in your terminal, to access internal data files contained in Docker. This exapmple uses the `input.txt` file:
      ```bash
-     docker run -v /path/to/local/directory:/usr/src/app/data sudoku-solver data/input.txt
+     docker run sudoku-solver data/input.txt
      ```
-   - Files in the data directory include:
+   - Other files in the data directory include:
         - `empty_board.txt` - a sample empty board
         - `empty_file.txt` - a sample empty file
         - `input.txt` - a sample input board
@@ -63,7 +67,7 @@ This application can be run in two modes using Docker: as a command-line tool to
      ```
 
 2. **Access the Web Application:**
-   - Open a web browser and navigate to `http://localhost:8888`.
+   - Open a web browser and navigate to http://localhost:8888.
    - The user interface is invtuitive, uploading a file is performed by drag and drop or by clicking the upload button.
 
 ## Running the Sudoku Solver Locally
@@ -79,14 +83,11 @@ This section provides instructions on how to run the Sudoku Solver project direc
      ```
 
 2. **Set Up a Virtual Environment:**
-
+   - Navigate to the project directory:
      ```bash
-     conda create --name sudoku_env python=3.8
-     conda activate sudoku_env
-     ```
-
-3. **Install Dependencies:**
-
+       cd mt942
+       ```
+   - Create a virtual environment:
      ```bash
      conda env create -f environment.yml
      ```
@@ -104,7 +105,7 @@ This section provides instructions on how to run the Sudoku Solver project direc
      ```bash
      python src/solve_sudoku.py --web
      ```
-   - Access the web application by navigating to `http://127.0.0.1:80` in your web browser.
+   - Access the web application by navigating to http://127.0.0.1:80 in your web browser.
 ### Notes
 
 - This setup assumes the use of `conda` over `pip`.
@@ -154,7 +155,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This project has utilised GitHub Copilot for code completion and assistance with text prompts.
 
-Although these tools aid the development process, its use was limited and only effective inscenarios where the developer had a clear idea of the code's structure and implementation.
+Although these tools aid the development process, its use was limited and only effective inscenarios where the developer had a clear idea of the code's structure and implementation. Other uses of these tools were used to aid the development of the project's documentation.
 
 For instance:
 - Plotting of functions
