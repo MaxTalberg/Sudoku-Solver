@@ -106,6 +106,22 @@ on a certain grid of the sudoku board</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sudoku_algorithm.SudokuAlgorithm.find_mrv_cell">
+<span class="sig-name descname"><span class="pre">find_mrv_cell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sudoku_algorithm.html#SudokuAlgorithm.find_mrv_cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sudoku_algorithm.SudokuAlgorithm.find_mrv_cell" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the cells with the minimum remaining values (MRV)
+and returns the cell with the least amount of possible values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The x and y coordinate of the cell with the least amount of
+possible values or None if no cell exists</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sudoku_algorithm.SudokuAlgorithm.solve_sudoku">
 <span class="sig-name descname"><span class="pre">solve_sudoku</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sudoku_algorithm.html#SudokuAlgorithm.solve_sudoku"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sudoku_algorithm.SudokuAlgorithm.solve_sudoku" title="Permalink to this definition"></a></dt>
 <dd><p>Solves the sudoku by recurssion of possbile indicies

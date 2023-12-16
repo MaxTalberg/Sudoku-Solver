@@ -124,6 +124,35 @@
         <span class="c1"># return True if intiger is allowed on square x, y</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
+<div class="viewcode-block" id="SudokuAlgorithm.find_mrv_cell"><a class="viewcode-back" href="../sudoku_algorithm.html#sudoku_algorithm.SudokuAlgorithm.find_mrv_cell">[docs]</a>    <span class="k">def</span> <span class="nf">find_mrv_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds the cells with the minimum remaining values (MRV)</span>
+<span class="sd">        and returns the cell with the least amount of possible values</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple:</span>
+<span class="sd">            The x and y coordinate of the cell with the least amount of</span>
+<span class="sd">            possible values or None if no cell exists</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># initial mrv score greater than any possible score</span>
+        <span class="n">mrv</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">mrv_cell</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="c1"># find number of possible values for cell</span>
+                    <span class="n">possible_values</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">check_possible_indicies</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">possible_values</span> <span class="o">&lt;</span> <span class="n">mrv</span><span class="p">:</span>
+                        <span class="n">mrv</span> <span class="o">=</span> <span class="n">possible_values</span>
+                        <span class="n">mrv_cell</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mrv_cell</span></div>
+
 <div class="viewcode-block" id="SudokuAlgorithm.solve_sudoku"><a class="viewcode-back" href="../sudoku_algorithm.html#sudoku_algorithm.SudokuAlgorithm.solve_sudoku">[docs]</a>    <span class="k">def</span> <span class="nf">solve_sudoku</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Solves the sudoku by recurssion of possbile indicies</span>
@@ -135,23 +164,22 @@
 <span class="sd">            True if the board is solved, False otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># print(&quot;Error: No board found&quot;)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No board found&quot;</span><span class="p">)</span>
-        <span class="c1"># checks if square is blank, contains a 0</span>
-        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_possible_indicies</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
-                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solve_sudoku</span><span class="p">():</span>
-                                <span class="k">return</span> <span class="kc">True</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="c1"># check if square is unsovleable</span>
-                    <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1"># If entire board is filled without issues, return True</span>
-        <span class="k">return</span> <span class="kc">True</span></div></div>
+        <span class="n">mrv_cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_mrv_cell</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mrv_cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mrv_cell</span>
+
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_possible_indicies</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">solve_sudoku</span><span class="p">():</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># check if board is unsovleable</span>
+        <span class="k">return</span> <span class="kc">False</span></div></div>
 </pre></div>
 
            </div>

@@ -67,41 +67,48 @@
 
   <h1>Source code for solve_sudoku</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">from</span> <span class="nn">sudoku_reader</span> <span class="kn">import</span> <span class="n">SudokuReader</span>
 <span class="kn">from</span> <span class="nn">sudoku_board</span> <span class="kn">import</span> <span class="n">SudokuBoard</span>
 <span class="kn">from</span> <span class="nn">sudoku_algorithm</span> <span class="kn">import</span> <span class="n">SudokuAlgorithm</span>
 <span class="kn">from</span> <span class="nn">sudoku_format</span> <span class="kn">import</span> <span class="n">SudokuFormat</span>
+<span class="kn">from</span> <span class="nn">app</span> <span class="kn">import</span> <span class="n">app</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../solve_sudoku.html#solve_sudoku.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main function to run the sudoku solver</span>
+<span class="sd">    Main function to run the sudoku solver and webapp</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Check the correct number of command line arguements are passsed</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="c1"># print(&quot;Usage: python3 src/sudoku_solver.py data/input.txt&quot;)</span>
-        <span class="k">return</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sudoku Solver and Web App&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;input_file&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the Sudoku puzzle file&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--web&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run the web application&quot;</span>
+    <span class="p">)</span>
 
-    <span class="c1"># input file containing sudoku</span>
-    <span class="n">input_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="c1"># read board from file</span>
-    <span class="n">reader</span> <span class="o">=</span> <span class="n">SudokuReader</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
-    <span class="n">board</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">board</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">web</span><span class="p">:</span>
+        <span class="c1"># Run the web app</span>
+        <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">:</span>
+        <span class="c1"># Run the Sudoku solver</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">SudokuReader</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+        <span class="n">sudoku</span> <span class="o">=</span> <span class="n">SudokuBoard</span><span class="p">(</span><span class="n">reader</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">SudokuAlgorithm</span><span class="p">(</span><span class="n">sudoku</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
 
-    <span class="c1"># initialise sudoku board</span>
-    <span class="n">sudoku</span> <span class="o">=</span> <span class="n">SudokuBoard</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
-
-    <span class="c1"># initialise sudoku algorithm</span>
-    <span class="n">solver</span> <span class="o">=</span> <span class="n">SudokuAlgorithm</span><span class="p">(</span><span class="n">sudoku</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
-
-    <span class="c1"># solve sudoku</span>
-    <span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve_sudoku</span><span class="p">():</span>
-        <span class="c1"># get formated sudoku board</span>
-        <span class="n">formatter</span> <span class="o">=</span> <span class="n">SudokuFormat</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">formatter</span><span class="o">.</span><span class="n">format_sudoku_board</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve_sudoku</span><span class="p">():</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">SudokuFormat</span><span class="p">(</span><span class="n">solver</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">formatter</span><span class="o">.</span><span class="n">format_sudoku_board</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsolvable sudoku&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unsolvable sudoku&quot;</span><span class="p">)</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: python src/solve_sudoku.py input.txt&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
