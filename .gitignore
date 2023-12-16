@@ -2,4 +2,5 @@
 **/*.pyc
 Report_test/*
 .DS_Store
-RC_Coursework/*
+RC_Coursework/
+instructions.md
