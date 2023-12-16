@@ -66,8 +66,6 @@ This application can be run in two modes using Docker: as a command-line tool to
    - Open a web browser and navigate to `http://localhost:8888`.
    - The user interface is invtuitive, uploading a file is performed by drag and drop or by clicking the upload button.
 
-
-
 ## Running the Sudoku Solver Locally
 
 This section provides instructions on how to run the Sudoku Solver project directly on your local machine.
@@ -110,3 +108,55 @@ This section provides instructions on how to run the Sudoku Solver project direc
 ### Notes
 
 - This setup assumes the use of `conda` over `pip`.
+
+## Documentation
+### Docker
+- When the Docker image for the Sudoku Solver is built, the project's Sphinx documentation is automatically built.
+
+### Local
+1. **Navigate to the `docs` directory:**
+   - Navigate to the `docs` directory:
+     ```bash
+     cd docs
+     ```
+2. **Build the Documentation:**
+    - Build the documentation:
+      ```bash
+      sphinx-build -b html . /path/to/output/directory
+      ```
+    - Replace `/path/to/output/directory` with the path where you want the built documentation to be placed.
+
+## Testing
+
+To run tests for the Sudoku Solver project, follow these steps:
+
+### Running Unit Tests
+
+- Before running tests, ensure that the Python path is set up correctly to include the project's source code. This can be done in several ways:
+
+  1. **Modify PYTHONPATH:**
+     ```bash
+     export PYTHONPATH=$PYTHONPATH:/src
+     ```
+
+  2. **Run Unit Tests:**
+     - Run the unit tests using:
+       ```
+       pystest
+       ```
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Use of Generative Tools
+
+This project has utilised GitHub Copilot for code completion and assistance with text prompts.
+
+Although these tools aid the development process, its use was limited and only effective inscenarios where the developer had a clear idea of the code's structure and implementation.
+
+For instance:
+- Plotting of functions
+- Implementation of Latex and README
+- Auto-complete of docstrings
