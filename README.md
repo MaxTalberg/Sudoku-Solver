@@ -53,7 +53,8 @@ This application can be run in two modes using Docker: as a command-line tool to
    - Place the input file (e.g., `puzzle.txt`) in a known directory on your machine.
 
 **Run the Docker Container:**
-   - Execute the following command in your terminal, replacing `/path/to/local/directory` with the path to the directory containing your puzzle file:
+   - To test out the solver on your own puzzles replace `/path/to/local/directory` with the path to the directory containing your puzzle file.
+   - Replace `puzzle.txt` with the name of your puzzle file and execute the following:
      ```bash
      docker run -v /path/to/local/directory:/usr/src/app/data sudoku-solver data/puzzle.txt
      ```
@@ -100,7 +101,7 @@ This section provides instructions on how to run the Sudoku Solver project direc
 ### Running the Application
 
 1. **Run the Command-Line Application:**
-   - To solve a puzzle from a file:
+   - To solve a puzzle from the data file:
      ```bash
      python src/solve_sudoku.py data/input.txt
      ```
@@ -131,9 +132,9 @@ To build the documentation for the Sudoku Solver project, follow these steps:
 2. **Build the Documentation:**
     - Build the documentation:
       ```bash
-      sphinx-build -b html . /path/to/output/directory
+      sphinx-build -b html source build
       ```
-    - Replace `/path/to/output/directory` with the path where you want the built documentation to be placed.
+    - The documentation can be viewed by opening the `index.html` file in the `build` directory.
 
 ## Testing
 
