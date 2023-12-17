@@ -141,25 +141,20 @@ To build the documentation for the Sudoku Solver project, follow these steps:
 To run tests for the Sudoku Solver project, follow these steps:
 
 ### Running Unit Tests
-
 - Before running tests, ensure that the Python path is set up correctly to include the project's source code.
 
-  1. **Navigate to the project directory:**
-       ```bash
-       cd mt942
-       ```
-  2. **Modify PYTHONPATH:**
-     ```bash
-     export PYTHONPATH=$PYTHONPATH:/src
-     ```
 
-  3. **Run Unit Tests:**
+1. **Navigate to the project directory `mt942` and run Unit Tests:**
 
       ```bash
        pytest
      ```
 
-
+### Notes
+- If the unit tests cant find the `src` folder run:
+    ```bash
+      export PYTHONPATH=$PYTHONPATH:/src
+    ```
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
