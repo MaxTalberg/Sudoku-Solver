@@ -58,9 +58,9 @@ class SudokuReader:
                     continue
 
                 # Remove the grid dividers and newline characters
-                # then split into numbers
                 row = line.replace("|", "").replace("\n", "")
 
+                # Create list of characters in row
                 row_values = [str(char) for char in row]
 
                 # append row to board

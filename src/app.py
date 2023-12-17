@@ -8,9 +8,19 @@ from sudoku_algorithm import SudokuAlgorithm
 app = Flask(__name__, template_folder="webapp/templates")
 
 
-# decorator for the home page of the app and defines the upload method
+# decorator for the app and defines the upload method
 @app.route("/", methods=["GET", "POST"])
 def upload():
+    """
+    Uploads a file containing a sudoku board and renders the board
+
+    Returns:
+    --------
+        HTML template: sudoku_board.html
+
+    """
+
+    # initialise upload error message
     error_message = None
 
     # if the request method is POST the user has uploaded a file
@@ -48,6 +58,14 @@ def upload():
 # decorator for the solve method
 @app.route("/solve", methods=["POST"])
 def solve():
+    """
+    Solves the sudoku board and renders the solved board
+
+    Returns:
+    --------
+        HTML template: sudoku_board.html
+    """
+    # initialise solve error message
     error_message = None
 
     try:

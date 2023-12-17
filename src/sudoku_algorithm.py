@@ -71,6 +71,7 @@ class SudokuAlgorithm:
         mrv = 10
         mrv_cell = None
 
+        # iterate through each cell
         for y in range(9):
             for x in range(9):
                 if self.board[y][x] == 0:
@@ -98,12 +99,15 @@ class SudokuAlgorithm:
         if self.board is None:
             raise ValueError("No board found")
 
+        # find the cell with the least amount of possible values
         mrv_cell = self.find_mrv_cell()
         if mrv_cell is None:
             return True
 
+        # unpack the tuple
         x, y = mrv_cell
 
+        # recurse through each possible value
         for n in range(1, 10):
             if self.check_possible_indicies(x, y, n):
                 self.board[y][x] = n
