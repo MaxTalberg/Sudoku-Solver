@@ -144,16 +144,20 @@ To run tests for the Sudoku Solver project, follow these steps:
 
 - Before running tests, ensure that the Python path is set up correctly to include the project's source code.
 
-  1. **Modify PYTHONPATH:**
+  1. **Navigate to the project directory:**
+       ```bash
+       cd mt942
+       ```
+  2. **Modify PYTHONPATH:**
      ```bash
      export PYTHONPATH=$PYTHONPATH:/src
      ```
 
-  2. **Run Unit Tests:**
-     - Run the unit tests using:
-       ```
-       pystest
-       ```
+  3. **Run Unit Tests:**
+
+      ```bash
+       pytest
+     ```
 
 
 ## License
