@@ -29,7 +29,7 @@ This application can be run in two modes using Docker: as a command-line tool to
 
 #### Internal files
 **Run the Docker Container:**
-   - Execute the following command in your terminal, to access internal data files contained in Docker. This exapmple uses the `input.txt` file:
+   - Execute the following command in your terminal, to access internal data files contained in Docker. This example uses the `input.txt` file:
      ```bash
      docker run sudoku-solver data/input.txt
      ```
@@ -43,7 +43,7 @@ This application can be run in two modes using Docker: as a command-line tool to
         - `invalid_row_board.txt` - a sample invalid row board
         - `invalid_size_board.txt` - a sample invalid size board
         - `invalid_square_board.txt` - a sample invalid square board
-        - `less_than_17_board.txt` - a sample board with less thanm 17 clues
+        - `less_than_17_board.txt` - a sample board with less than 17 clues
         - `slow_unsolvable_board.txt` - a sample unsolvable board
         - `solved_board.txt` - a sample solved board
         - `not_a_text_file.pdf` - a sample non-text file
@@ -60,7 +60,7 @@ This application can be run in two modes using Docker: as a command-line tool to
 
 ### Running the Web Application with Docker
 
-1. **Run the Docker Container for Web App:**
+1. **Run the Docker Container for the Web App:**
    - To run the web application, use the following command:
      ```bash
      docker run -p 8888:80 sudoku-solver --web
@@ -68,8 +68,9 @@ This application can be run in two modes using Docker: as a command-line tool to
 
 2. **Access the Web Application:**
    - Open a web browser and navigate to http://localhost:8888.
-   - The user interface is invtuitive, uploading a file is performed by drag and drop or by clicking the upload button.
-
+   - The user interface is intuitive, uploading a file is performed by drag and drop or by clicking the `Choose file` button.
+   - Click `Upload` to upload the puzzle to the board.
+   - Click `Solve` to solve the puzzle.
 ## Running the Sudoku Solver Locally
 
 This section provides instructions on how to run the Sudoku Solver project directly on your local machine.
@@ -91,6 +92,10 @@ This section provides instructions on how to run the Sudoku Solver project direc
      ```bash
      conda env create -f environment.yml
      ```
+    - Activate the virtual environment:
+      ```bash
+      conda activate sudoku-env
+      ```
 
 ### Running the Application
 
@@ -111,6 +116,9 @@ This section provides instructions on how to run the Sudoku Solver project direc
 - This setup assumes the use of `conda` over `pip`.
 
 ## Documentation
+
+To build the documentation for the Sudoku Solver project, follow these steps:
+
 ### Docker
 - When the Docker image for the Sudoku Solver is built, the project's Sphinx documentation is automatically built.
 
@@ -133,7 +141,7 @@ To run tests for the Sudoku Solver project, follow these steps:
 
 ### Running Unit Tests
 
-- Before running tests, ensure that the Python path is set up correctly to include the project's source code. This can be done in several ways:
+- Before running tests, ensure that the Python path is set up correctly to include the project's source code.
 
   1. **Modify PYTHONPATH:**
      ```bash
@@ -155,7 +163,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This project has utilised GitHub Copilot for code completion and assistance with text prompts.
 
-Although these tools aid the development process, its use was limited and only effective inscenarios where the developer had a clear idea of the code's structure and implementation. Other uses of these tools were used to aid the development of the project's documentation.
+Although these tools aid the development process, its use was limited and only effective in scenarios where the developer had a clear idea of the code's structure and implementation. Other uses of these tools were used to aid the development of the project's documentation.
 
 For instance:
 - Plotting of functions

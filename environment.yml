@@ -1,4 +1,4 @@
-name: sudoku_env
+name: sudoku-env
 channels:
   - defaults
   - conda-forge

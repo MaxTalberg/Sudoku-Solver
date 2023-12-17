@@ -20,13 +20,13 @@ COPY docs/ docs/
 RUN conda env create -f environment.yml
 
 # Activate the environment
-SHELL ["conda", "run", "-n", "sudoku_env", "/bin/bash", "-c"]
+SHELL ["conda", "run", "-n", "sudoku-env", "/bin/bash", "-c"]
 
 # Build Sphinx Documentation
 RUN sphinx-build -b html docs/source/ docs/build/
 
 # The code to run when container is started
-ENTRYPOINT ["conda", "run", "-n", "sudoku_env", "python", "src/solve_sudoku.py"]
+ENTRYPOINT ["conda", "run", "-n", "sudoku-env", "python", "src/solve_sudoku.py"]
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
